@@ -1,0 +1,32 @@
+---
+title: "Project_Milestone_01"
+format: html
+editor: visual
+---
+
+## Project Milestone #1
+
+### [Project option selection]{.underline}
+
+### [Create git repository]{.underline}
+
+#### *Share a link to your group's git repository*
+
+### [Roles and responsibilities]{.underline}
+
+#### *Team's preferred communication method*
+
+What is your team's preferred communication method - email, text, bcourse messaging?
+
+#### *Team's preferred meeting times and frequency*
+
+-   When will your team be holding meetings? How frequently will you meet? Are there times or days that work well for everyone?
+-   Discuss future non-academic commitments that might affect members' availability.
+-   Discuss meeting tempo: "checking in" at the beginning of meetings versus "just sticking to business".
+
+#### *Team's preferred method for tracking progress*
+
+-   How is your team going to keep track of progress? Who will be taking minutes, creating agendas, and contacting the course facilitators with questions?
+-   We encourage you to discuss potential dates and times to meet with a course facilitator during Weeks 3-5. Decide on the best date and time for all.
+
+#### *Point person for contacting course facilitators with questions*
