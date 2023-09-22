@@ -7,22 +7,26 @@ editor: visual
 ## Project Milestone #1
 
 ### [Project option selection]{.underline}
+Scenario 1: Flu outbreak (simulated) and vaccine uptake in California
 
 ### [Create git repository]{.underline}
 
 #### *Share a link to your group's git repository*
+https://github.com/shirley-sui/PHW251-Group8-Project.git
 
 ### [Roles and responsibilities]{.underline}
 
 #### *Team's preferred communication method*
-
-What is your team's preferred communication method - email, text, bcourse messaging?
+The team prefers Whatsapp messaging and Zoom meetings to complete project milestones. We have each other emails and phone numbers added to Whatsapps for quicker communication. 
 
 #### *Team's preferred meeting times and frequency*
 
 -   When will your team be holding meetings? How frequently will you meet? Are there times or days that work well for everyone?
+The team will hold meetings once a week, and will cancel any unecessary meeting. Friday afternoon ~4:30 pm. 
 -   Discuss future non-academic commitments that might affect members' availability.
+Shirley travels Oct. 5- 8; Nicole travels Nov. 29 - Dec. 3; Kim birthday plans Nov. 23 - 28 
 -   Discuss meeting tempo: "checking in" at the beginning of meetings versus "just sticking to business".
+Mixed style between team members checking-in and business. Checking-in will include team progress, effort and any struggle for each team members. We will have agenda items. 
 
 #### *Team's preferred method for tracking progress*
 
