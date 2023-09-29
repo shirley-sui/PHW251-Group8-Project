@@ -86,7 +86,6 @@ library(dplyr)
 colnames(sim_flu_LACounty_raw) <- tolower(gsub(' ', '_', colnames(sim_flu_LACounty_raw)))
 
 
-
 #Arrange column names from dataset in specific order as written in code
 sim_flu_LACounty_raw <- select(sim_flu_LACounty_raw, c(dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx))
 
