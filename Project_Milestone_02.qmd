@@ -53,11 +53,9 @@ sim_flu_CA_raw <- read_csv('./scenario_1/sim_flu_CA.csv')
 
 ```{r import_data_sim_flu_LACounty.csv -- Nicole Fernandez}
 
-#Load the readr package for CSV file handling
-library(readr)
-
 #Import the CSV file 'scenario_1/sim_flu_LACounty.csv' into a Dataframe in R using read_csv function
 sim_flu_LACounty <- read_csv("scenario_1/sim_flu_LACounty.csv")
+
 
 
 #Assign it as "sim_flu_LACounty_raw" to distinguish it as raw data
@@ -80,16 +78,18 @@ View(sim_flu_LACounty_raw)
 
 ```{r clean_up_names_sim_flu_LACounty.csv -- Nicole Fernandez}
 
-
-colnames(sim_flu_LACounty_raw) <- tolower(gsub(' ', '_', colnames(sim_flu_LACounty_raw)))
-
-
 #Load the dplyr package in order to perform following functions or data manipulation for columns
 library(dplyr)
 
 
+#clean up column names for sim_flu_LACounty.csv
+colnames(sim_flu_LACounty_raw) <- tolower(gsub(' ', '_', colnames(sim_flu_LACounty_raw)))
+
+
+
 #Arrange column names from dataset in specific order as written in code
 sim_flu_LACounty_raw <- select(sim_flu_LACounty_raw, c(dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx))
+
 
 #View column names from dataframe to make sure they are in the desired order
 colnames(sim_flu_LACounty_raw)
