@@ -1,0 +1,128 @@
+---
+title: "Project_Milestone_02"
+author: "Ngan Nguyen, Nicole Fernandez, Shirley Sui"
+format: html
+editor: visual
+---
+
+## Project Milestone #2
+
+### [Description of dataset]{.underline}
+
+#### *What is the data source? (1-2 sentences on where the data is coming from, dates included, etc.)*
+
+The data was obtained from the project github repository for the PHW251 R for Public Health course. The data we are using for this project is from a simulated flu outbreak and vaccine update in California.
+
+The three datasets include data on the following (as described in the project page for Scenario 1):
+
+1.  Dataset one (sim_flu_CA.csv) contains weekly data about flu cases and case severity by demographic categories (age category, race, sex) and geographic categories (county) for California counties (except for Los Angeles county);
+
+2.  Dataset two (sim_flu_LACounty.csv) contains population data by similar demographic and geographic categories for Los Angeles county.
+
+3.  Dataset three (ca_vax_rates_quarter.csv) contains quarterly COVID vaccination rates by county and age category.
+
+#### *How does the dataset relate to the group problem statement and question?*
+
+Our goal is to determine if, in California: 
+1.  COVID vaccination rates reflect flu vaccination rates in the population 
+2.  There is a correlation between COVID vaccination and flu rates and/or severity
+
+The datasets include the information needed for data analysis related to these two questions. Specifically, dataset one and two contain flu case and case severity data for all California counties, and dataset three contains COVID vaccination rate data by county.
+
+The only data not directly included is flu vaccination rates, but we can probably infer the relationship between COVID and flu vaccination rates based on flu case rate and case severity data analysis.
+
+### [Import statements for all datasets]{.underline}
+
+-   NOTE: Please use datasets available in the PHW251 Project Data github repo. (this is important to make sure everyone is using the same datasets)
+-   Use appropriate import function and package based on the type of file
+-   Utilize function arguments to control relevant components (i.e. change column types, column names, missing values, etc.)
+-   Document the import process
+
+``` {r load libraries}
+# Load tidyverse for all data cleaning packages, including readr()
+library(tidyverse)
+```
+
+``` {r import_data_ca_vax_rates_quarter.csv -- Ngan Nguyen}
+
+```
+
+``` {r import_data_sim_flu_CA.csv -- Shirley Sui}
+
+```
+
+``` {r import_data_sim_flu_LACounty.csv -- Nicole Fernandez}
+
+```
+
+-   Clean up column names (recommend using snake case, which is lower case text with underscores between words)
+
+``` {r clean_up_names_ca_vax_rates_quarter.csv -- Ngan Nguyen}
+
+```
+
+``` {r clean_up_names_sim_flu_CA.csv -- Shirley Sui}
+
+```
+
+``` {r clean_up_names_sim_flu_LACounty.csv -- Nicole Fernandez}
+
+```
+
+### [Identify data types for 5+ data elements/columns/variables]{.underline}
+
+#### *Identify 5+ data elements required for your specified scenario. If \<5 elements are required to complete the analysis, please choose additional variables of interest in the data set to explore in this milestone.*
+
+From the flu case rates and case severity datasets:
+-  county
+-  age_cat
+-  race_ethnicity
+-  dt_diagnosis
+-  new_infections
+-  new_severe
+-  count_susceptible
+-  pop
+
+From the COVID vaccination rate data:
+-  County Name
+-  Demographic Category	
+-  Demographic Value
+-  Dt Admin
+-  Total Partial Vaccinated
+-  Cumulative Fully Vaccinated
+-  Cumulative At Least ONe Dose
+-  Cumulative Unvaccinated
+-  Cumulative Up To Date Vax
+-  Estimated Population
+
+#### *Utilize functions or resources in RStudio to determine the types of each data element (i.e. character, numeric, factor)*
+
+``` {r data_types -- Ngan Nguyen}
+
+```
+
+#### *Identify the desired type/format for each variable---will you need to convert any columns to numeric or another type?* -- Shirley Sui
+
+##ANSWERHERE##
+
+### [Provide a basic description of the 5+ data elements]{.underline}
+-  Numeric: mean, median, range
+-  Character: unique values/categories
+-  or any other descriptives that will be useful to the analysis
+
+``` {r data_summary -- Nicole Fernandez}
+
+```
+
+### [Describe cleaning that each data source may need]{.underline}
+
+#### *NOTE: There is no requirement for any data cleaning in this milestone. Please just list out the anticipated data cleaning needed.*
+#### *Examples:*
+-   Data elements that need to be converted to a different type
+
+
+-   Data elements that need cleaning or re-categorization
+
+
+-   Data elements that may be used for future joins (i.e. state, county)
+County (sim_flu_LACounty.csv data will need to be joined into the sim_flu_CA.csv dataset)
