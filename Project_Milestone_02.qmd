@@ -79,6 +79,18 @@ View(sim_flu_LACounty_raw)
 
 ```{r clean_up_names_ca_vax_rates_quarter.csv -- Ngan Nguyen}
 
+# Get the current column names
+current_colnames <- colnames(ca_vax_rates_quarter)
+
+# Convert column names to snake case
+new_colnames <- tolower(gsub(" ", "_", current_colnames))
+
+# Assign the new column names to the data frame
+colnames(ca_vax_rates_quarter_raw) <- new_colnames
+
+# Print the updated column names
+colnames(ca_vax_rates_quarter_raw)
+
 ```
 
 ![current flu data column names](column_names_flu.png)
@@ -120,6 +132,28 @@ From the COVID vaccination rate data: - County Name - Demographic Category - Dem
 
 ```{r data_types -- Ngan Nguyen}
 
+# Figure out data types of each column in the "ca_vax_rates_quarter_raw" data frame  
+ca_vax_col_types <- data.frame(
+  coltypes_ca_vax = sapply(ca_vax_rates_quarter_raw, typeof),
+  stringsAsFactors = FALSE
+)
+
+# Figure out data types of each column in the "sim_flu_CA_raw" data frame  
+sim_flu_CA_col_types <- data.frame(
+  coltypes_flu_CA = sapply(sim_flu_CA_raw, typeof),
+  stringsAsFactors = FALSE
+)
+
+# Figure out data types of each column in the "sim_flu_LACounty_raw" data frame  
+sim_flu_LACounty_col_types <- data.frame(
+  coltypes_flu_LACounty = sapply(sim_flu_LACounty_raw, typeof),
+  stringsAsFactors = FALSE
+)
+
+print(ca_vax_col_types)
+print(sim_flu_CA_col_types)
+print(sim_flu_LACounty_col_types)
+
 ```
 
 #### *Identify the desired type/format for each variable---will you need to convert any columns to numeric or another type?* -- Shirley Sui
@@ -144,6 +178,10 @@ From the COVID vaccination rate data: - County Name - Demographic Category - Dem
 
 -   Data elements that need to be converted to a different type
 
--   Data elements that need cleaning or re-categorization Demographic Category & Demographic Value in the COVID vaccination dataset will have to be cleaned up to match the columns in the flu datasets.
+-   Data elements that need cleaning or re-categorization
 
--   Data elements that may be used for future joins (i.e. state, county) County (sim_flu_LACounty.csv data will need to be joined into the sim_flu_CA.csv dataset)
+    -   Demographic Category & Demographic Value in the COVID vaccination dataset will have to be cleaned up to match the columns in the flu datasets.
+
+-   Data elements that may be used for future joins (i.e. state, county) County
+
+    -   (sim_flu_LACounty.csv data will need to be joined into the sim_flu_CA.csv dataset)
