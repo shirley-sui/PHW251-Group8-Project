@@ -42,7 +42,16 @@ library(tidyverse)
 ```
 
 ```{r import_data_ca_vax_rates_quarter.csv -- Ngan Nguyen}
+#Load the readr package for CSV file handling
+library(readr)
 
+#Import the CSV file 'scenario_1/ca_vax_rates_quarter.csv' into a Dataframe in R using read_csv function
+ca_vax_rates_quarter <- read_csv("scenario_1/ca_vax_rates_quarter.csv")
+
+
+#Assign it as "ca_vax_rates_quarter_raw" to distinguish it as raw data
+ca_vax_rates_quarter_raw <- ca_vax_rates_quarter
+print(ca_vax_rates_quarter_raw)
 ```
 
 ```{r import_data_sim_flu_CA.csv -- Shirley Sui}
