@@ -199,20 +199,23 @@ For the sim_flu data (both CA and LA County),
 
 
 
-
-
-
 #Select desired 5+ data elements from each dataframe
-selected_columns_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("age_category", "race_eth", "dt_dx", "dx_new", "severe_new", "susceptible")]
+selected_columns_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("dx_new", "severe_new", "susceptible")]
 
-selected_columns_vax_rates_quarter_raw <- ca_vax_rates_quarter_raw[, c("county_name", "demographic_category", "demographic_value", "dt_admin", "total_partial_vaccinated", "cumulative_fully_vaccinated", "cumulative_at_least_one_dose", "cumulative_unvaccinated", "cumulative_up_to_date_vax", "estimated_population")]
+selected_columns_vax_rates_quarter_raw <- ca_vax_rates_quarter_raw[, c( "total_partial_vaccinated", "cumulative_fully_vaccinated", "cumulative_at_least_one_dose", "cumulative_unvaccinated", "cumulative_up_to_date_vax", "estimated_population")]
 
 
-selected_columns_sim_flu_CA_new <- sim_flu_CA_new[, c("county", "pop")]
+selected_columns_sim_flu_CA_new <- sim_flu_CA_new[, c("pop", "dx_new", "severe_new", "susceptible")]
 
 
 # Combine the selected columns into a new dataframe
-combined_dataframe <- cbind(selected_columns_sim_flu_LACounty_raw, selected_columns_vax_rates_quarter_raw, selected_columns_sim_flu_CA_new)
+combined_dataframe <- list(selected_columns_sim_flu_LACounty_raw, selected_columns_vax_rates_quarter_raw, selected_columns_sim_flu_CA_new)
+
+
+
+
+
+
 
 # Calculate mean for each selected column
 mean_values <- sapply(combined_dataframe, mean)
@@ -232,6 +235,12 @@ print(median_values)
 
 print("Range:")
 print(range_values)
+
+
+
+
+
+
 
 
 -   Numeric: mean, median, range
