@@ -11,7 +11,7 @@ editor: visual
 
 #### *What is the data source? (1-2 sentences on where the data is coming from, dates included, etc.)*
 
-The data was obtained from the project github repository for the PHW251 R for Public Health course. The data we are using for this project is from a simulated flu outbreak and vaccine update in California. The data is simulated data that represents \[describe generally/briefly what is the data\] for the entire state of California during \[describe the time period\].
+The data was obtained from the project github repository for the PHW251 R for Public Health course. The data we are using for this project is from a simulated data that represents flu outbreak and COVID-19 vaccine update in California from 2022 to 2023. 
 
 The three datasets include data on the following (as described in the project page for Scenario 1):
 
@@ -55,6 +55,7 @@ print(ca_vax_rates_quarter_raw)
 # load dataset from group project git repo using read_csv
 # assign it as "sim_flu_CA_raw" to distinguish it as raw data
 sim_flu_CA_raw <- read_csv('./scenario_1/sim_flu_CA.csv')
+print(sim_flu_CA_raw)
 ```
 
 ```{r import_data_sim_flu_LACounty.csv -- Nicole Fernandez}
@@ -64,7 +65,7 @@ sim_flu_LACounty <- read_csv("scenario_1/sim_flu_LACounty.csv")
 
 #Assign it as "sim_flu_LACounty_raw" to distinguish it as raw data
 sim_flu_LACounty_raw <- sim_flu_LACounty
-View(sim_flu_LACounty_raw)
+print(sim_flu_LACounty_raw)
 
 ```
 
@@ -259,7 +260,7 @@ print(unique_vax_raw)
 -   Data elements that need cleaning or re-categorization
 
     -   Remove rows with NA values for some of the data
-    -   in the COVID-19 vaccination dataset, convert demographic category + demographic value information to match the format from the simulated flu rates datasets. Some of the demographic categories also may need additional work to align them with the other two datasets (e.g. "Unknown/undifferentiated" gender)
+    -   In the COVID-19 vaccination dataset, convert demographic category + demographic value information to match the format from the simulated flu rates datasets. Some of the demographic categories also may need additional work to align them with the other two datasets (e.g. "Unknown/undifferentiated" gender)
     -   In the COVID-19 vaccination dataset, the age categories of "Under 5", "5-11", and "12-17" need to be combined to match the other two dataset categories
     -   dt_dx in the simulated flu rates LA County data needs to be converted to an R date column
 
