@@ -11,7 +11,7 @@ editor: visual
 
 #### *What is the data source? (1-2 sentences on where the data is coming from, dates included, etc.)*
 
-The data was obtained from the project github repository for the PHW251 R for Public Health course. The data we are using for this project is from a simulated flu outbreak and vaccine update in California.
+The data was obtained from the project github repository for the PHW251 R for Public Health course. The data we are using for this project is from a simulated flu outbreak and vaccine update in California. The data is simulated data that represents [describe generally/briefly what is the data] for the entire state of California during [describe the time period]. 
 
 The three datasets include data on the following (as described in the project page for Scenario 1):
 
