@@ -11,7 +11,7 @@ editor: visual
 
 #### *What is the data source? (1-2 sentences on where the data is coming from, dates included, etc.)*
 
-The data was obtained from the project github repository for the PHW251 R for Public Health course. The data we are using for this project is from a simulated flu outbreak and vaccine update in California. The data is simulated data that represents [describe generally/briefly what is the data] for the entire state of California during [describe the time period]. 
+The data was obtained from the project github repository for the PHW251 R for Public Health course. The data we are using for this project is from a simulated flu outbreak and vaccine update in California. The data is simulated data that represents \[describe generally/briefly what is the data\] for the entire state of California during \[describe the time period\].
 
 The three datasets include data on the following (as described in the project page for Scenario 1):
 
@@ -131,27 +131,9 @@ colnames(sim_flu_LACounty_raw)
 
 #### *Identify 5+ data elements required for your specified scenario. If \<5 elements are required to complete the analysis, please choose additional variables of interest in the data set to explore in this milestone.*
 
-From the flu case rates and case severity datasets: 
--  county 
--  age_category 
--  race_eth 
--  dt_dx
--  dx_new
--  severe_new 
--  susceptible 
--  pop
+From the flu case rates and case severity datasets: - county - age_category - race_eth - dt_dx - dx_new - severe_new - susceptible - pop
 
-From the COVID vaccination rate data: 
--  County Name 
--  Demographic Category 
--  Demographic Value 
--  Dt Admin 
--  Total Partial Vaccinated 
--  Cumulative Fully Vaccinated 
--  Cumulative At Least ONe Dose 
--  Cumulative Unvaccinated 
--  Cumulative Up To Date Vax 
--  Estimated Population
+From the COVID vaccination rate data: - County Name - Demographic Category - Demographic Value - Dt Admin - Total Partial Vaccinated - Cumulative Fully Vaccinated - Cumulative At Least ONe Dose - Cumulative Unvaccinated - Cumulative Up To Date Vax - Estimated Population
 
 #### *Utilize functions or resources in RStudio to determine the types of each data element (i.e. character, numeric, factor)*
 
@@ -185,69 +167,46 @@ print(sim_flu_LACounty_col_types)
 
 #### *Identify the desired type/format for each variable---will you need to convert any columns to numeric or another type?* -- Shirley Sui
 
-For ca_vax_rates,
--  demographic_value should be a factor
--  dt_admin should be a date
--  quarter should be a factor?
+For ca_vax_rates, - demographic_value should be a factor - dt_admin should be a date - quarter should be a factor?
 
-For the sim_flu data (both CA and LA County),
--  age_category should be a factor
--  race_eth should be a factor
--  dt_dx should be a date
+For the sim_flu data (both CA and LA County), - age_category should be a factor - race_eth should be a factor - dt_dx should be a date
 
 ### [Provide a basic description of the 5+ data elements]{.underline}
 
+```{r data_summary -- Nicole Fernandez}
+#Select desired 5+ data elements from each dataframe selected_columns_sim_flu_LACounty_raw \<- sim_flu_LACounty_raw\[, c("dx_new", "severe_new", "susceptible")\]
 
+selected_columns_vax_rates_quarter_raw \<- ca_vax_rates_quarter_raw\[, c( "total_partial_vaccinated", "cumulative_fully_vaccinated", "cumulative_at_least_one_dose", "cumulative_unvaccinated", "cumulative_up_to_date_vax", "estimated_population")\]
 
-#Select desired 5+ data elements from each dataframe
-selected_columns_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("dx_new", "severe_new", "susceptible")]
-
-selected_columns_vax_rates_quarter_raw <- ca_vax_rates_quarter_raw[, c( "total_partial_vaccinated", "cumulative_fully_vaccinated", "cumulative_at_least_one_dose", "cumulative_unvaccinated", "cumulative_up_to_date_vax", "estimated_population")]
-
-
-selected_columns_sim_flu_CA_new <- sim_flu_CA_new[, c("pop", "dx_new", "severe_new", "susceptible")]
-
+selected_columns_sim_flu_CA_new \<- sim_flu_CA_new\[, c("pop", "dx_new", "severe_new", "susceptible")\]
 
 # Combine the selected columns into a new dataframe
-combined_dataframe <- list(selected_columns_sim_flu_LACounty_raw, selected_columns_vax_rates_quarter_raw, selected_columns_sim_flu_CA_new)
 
-
-
-
-
-
+combined_dataframe \<- list(selected_columns_sim_flu_LACounty_raw, selected_columns_vax_rates_quarter_raw, selected_columns_sim_flu_CA_new)
 
 # Calculate mean for each selected column
-mean_values <- sapply(combined_dataframe, mean)
+
+mean_values \<- sapply(combined_dataframe, mean)
 
 # Calculate median for each selected column
-median_values <- sapply(combined_dataframe, median)
+
+median_values \<- sapply(combined_dataframe, median)
 
 # Calculate range for each selected column
-range_values <- sapply(combined_dataframe, function(x) max(x) - min(x))
+
+range_values \<- sapply(combined_dataframe, function(x) max(x) - min(x))
 
 # Display the results
-print("Mean:")
-print(mean_values)
 
-print("Median:")
-print(median_values)
+print("Mean:") print(mean_values)
 
-print("Range:")
-print(range_values)
+print("Median:") print(median_values)
 
-
-
-
-
-
-
+print("Range:") print(range_values)
 
 -   Numeric: mean, median, range
 -   Character: unique values/categories
 -   or any other descriptives that will be useful to the analysis
-
-```{r data_summary -- Nicole Fernandez}
 
 ```
 
