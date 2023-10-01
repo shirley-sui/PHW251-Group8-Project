@@ -174,35 +174,49 @@ For the sim_flu data (both CA and LA County), - age_category should be a factor 
 ### [Provide a basic description of the 5+ data elements]{.underline}
 
 ```{r data_summary -- Nicole Fernandez}
-#Select desired 5+ data elements from each dataframe selected_columns_sim_flu_LACounty_raw \<- sim_flu_LACounty_raw\[, c("dx_new", "severe_new", "susceptible")\]
 
-selected_columns_vax_rates_quarter_raw \<- ca_vax_rates_quarter_raw\[, c( "total_partial_vaccinated", "cumulative_fully_vaccinated", "cumulative_at_least_one_dose", "cumulative_unvaccinated", "cumulative_up_to_date_vax", "estimated_population")\]
 
-selected_columns_sim_flu_CA_new \<- sim_flu_CA_new\[, c("pop", "dx_new", "severe_new", "susceptible")\]
+# #Select desired 5+ data elements from each dataframe
+selected_columns_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("dx_new", "severe_new", "susceptible")]
 
-# Combine the selected columns into a new dataframe
+selected_columns_vax_rates_quarter_raw <- ca_vax_rates_quarter_raw[, c( "total_partial_vaccinated", "cumulative_fully_vaccinated", "cumulative_at_least_one_dose", "cumulative_unvaccinated", "cumulative_up_to_date_vax", "estimated_population")]
 
-combined_dataframe \<- list(selected_columns_sim_flu_LACounty_raw, selected_columns_vax_rates_quarter_raw, selected_columns_sim_flu_CA_new)
+selected_columns_sim_flu_CA_new <- sim_flu_CA_new[, c("pop", "dx_new", "severe_new", "susceptible")]
 
-# Calculate mean for each selected column
 
-mean_values \<- sapply(combined_dataframe, mean)
 
-# Calculate median for each selected column
 
-median_values \<- sapply(combined_dataframe, median)
+summary(selected_columns_sim_flu_CA_new)
+summary(selected_columns_sim_flu_LACounty_raw)
+summary(selected_columns_vax_rates_quarter_raw)
 
-# Calculate range for each selected column
 
-range_values \<- sapply(combined_dataframe, function(x) max(x) - min(x))
+range_values_CA_new <- sapply(selected_columns_sim_flu_CA_new, function(x) max(x) - min(x))
+range_values_LACounty_raw <- sapply(selected_columns_sim_flu_LACounty_raw, function(x) max(x) - min(x))
+range_values_vax_raw <- sapply(selected_columns_vax_rates_quarter_raw, function(x) max(x) - min(x))
 
-# Display the results
 
-print("Mean:") print(mean_values)
+print(range_values_CA_new)
+print(range_values_LACounty_raw)
+print(range_values_vax_raw)
 
-print("Median:") print(median_values)
 
-print("Range:") print(range_values)
+
+
+
+
+
+
+char_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("race_eth", "age_category", "sex")]
+                                                                   
+char_sim_flu_CA_new <- sim_flu_CA_new[, c("race_eth", "age_category", "sex", "county")]
+                                                                  
+char_ca_vax_rates_quarter_raw <- ca_vax_rates_quarter_raw[, c("county_name", "demographic_category", "demographic_value")]
+
+unique(char_sim_flu_LACounty_raw)
+unique(char_sim_flu_CA_new)
+unique(char_ca_vax_rates_quarter_raw)
+
 
 -   Numeric: mean, median, range
 -   Character: unique values/categories
