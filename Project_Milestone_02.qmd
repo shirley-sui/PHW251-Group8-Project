@@ -42,9 +42,6 @@ library(tidyverse)
 ```
 
 ```{r import_data_ca_vax_rates_quarter.csv -- Ngan Nguyen}
-#Load the readr package for CSV file handling
-library(readr)
-
 #Import the CSV file 'scenario_1/ca_vax_rates_quarter.csv' into a Dataframe in R using read_csv function
 ca_vax_rates_quarter <- read_csv("scenario_1/ca_vax_rates_quarter.csv")
 
@@ -61,10 +58,6 @@ sim_flu_CA_raw <- read_csv('./scenario_1/sim_flu_CA.csv')
 ```
 
 ```{r import_data_sim_flu_LACounty.csv -- Nicole Fernandez}
-
-#Load the readr package for CSV file handling
-library(readr)
-
 #Import the CSV file 'scenario_1/sim_flu_LACounty.csv' into a Dataframe in R using read_csv function
 sim_flu_LACounty <- read_csv("scenario_1/sim_flu_LACounty.csv")
 
@@ -78,7 +71,6 @@ View(sim_flu_LACounty_raw)
 -   Clean up column names (recommend using snake case, which is lower case text with underscores between words)
 
 ```{r clean_up_names_ca_vax_rates_quarter.csv -- Ngan Nguyen}
-
 # Get the current column names
 current_colnames <- colnames(ca_vax_rates_quarter)
 
@@ -107,39 +99,64 @@ colnames(sim_flu_CA_new)
 ```
 
 ```{r clean_up_names_sim_flu_LACounty.csv -- Nicole Fernandez}
-
-
+# change to snake case
 colnames(sim_flu_LACounty_raw) <- tolower(gsub(' ', '_', colnames(sim_flu_LACounty_raw)))
 
-
-#Load the dplyr package in order to perform following functions or data manipulation for columns
-library(dplyr)
-
-
-#Arrange column names from dataset in specific order as written in code
+# Arrange column names from dataset in specific order as written in code
 sim_flu_LACounty_raw <- select(sim_flu_LACounty_raw, c(dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx))
 
 
-#View column names from dataframe to make sure they are in the desired order
+# View column names from dataframe to make sure they are in the desired order
 colnames(sim_flu_LACounty_raw)
-
-
-
 ```
 
 ### [Identify data types for 5+ data elements/columns/variables]{.underline}
 
 #### *Identify 5+ data elements required for your specified scenario. If \<5 elements are required to complete the analysis, please choose additional variables of interest in the data set to explore in this milestone.*
 
-From the flu case rates and case severity datasets: - county - age_category - race_eth - dt_dx - dx_new - severe_new - susceptible - pop
+From the flu case rates and case severity datasets:
 
-From the COVID vaccination rate data: - County Name - Demographic Category - Demographic Value - Dt Admin - Total Partial Vaccinated - Cumulative Fully Vaccinated - Cumulative At Least ONe Dose - Cumulative Unvaccinated - Cumulative Up To Date Vax - Estimated Population
+-   county
+
+-   age_category
+
+-   race_eth
+
+-   dt_dx
+
+-   dx_new
+
+-   severe_new
+
+-   susceptible
+
+-   pop
+
+From the COVID vaccination rate data:
+
+-   County Name
+
+-   Demographic Category
+
+-   Demographic Value
+
+-   Dt Admin
+
+-   Total Partial Vaccinated
+
+-   Cumulative Fully Vaccinated
+
+-   Cumulative At Least ONe Dose
+
+-   Cumulative Unvaccinated
+
+-   Cumulative Up To Date Vax
+
+-   Estimated Population
 
 #### *Utilize functions or resources in RStudio to determine the types of each data element (i.e. character, numeric, factor)*
 
 ```{r data_types -- Ngan Nguyen}
-### we might need to change _raw to the "new" dataframes we set up above ###
-### not sure if we want to select just the columns we specified above? ###
 
 # Figure out data types of each column in the "ca_vax_rates_quarter_raw" data frame  
 ca_vax_col_types <- data.frame(
@@ -149,7 +166,7 @@ ca_vax_col_types <- data.frame(
 
 # Figure out data types of each column in the "sim_flu_CA_raw" data frame  
 sim_flu_CA_col_types <- data.frame(
-  coltypes_flu_CA = sapply(sim_flu_CA_raw, typeof),
+  coltypes_flu_CA = sapply(sim_flu_CA_new, typeof),
   stringsAsFactors = FALSE
 )
 
@@ -173,55 +190,46 @@ For the sim_flu data (both CA and LA County), - age_category should be a factor 
 
 ### [Provide a basic description of the 5+ data elements]{.underline}
 
+-   Numeric: mean, median, range
+-   Character: unique values/categories
+-   or any other descriptives that will be useful to the analysis
+
 ```{r data_summary -- Nicole Fernandez}
+# Select desired numeric data elements from each dataframe
+num_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("dx_new", "severe_new", "susceptible")]
 
+num_vax_rates_quarter_raw <- ca_vax_rates_quarter_raw[, c( "total_partial_vaccinated", "cumulative_fully_vaccinated", "cumulative_at_least_one_dose", "cumulative_unvaccinated", "cumulative_up_to_date_vax", "estimated_population")]
 
-# #Select desired 5+ data elements from each dataframe
-selected_columns_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("dx_new", "severe_new", "susceptible")]
+num_sim_flu_CA_new <- sim_flu_CA_new[, c("pop", "dx_new", "severe_new", "susceptible")]
 
-selected_columns_vax_rates_quarter_raw <- ca_vax_rates_quarter_raw[, c( "total_partial_vaccinated", "cumulative_fully_vaccinated", "cumulative_at_least_one_dose", "cumulative_unvaccinated", "cumulative_up_to_date_vax", "estimated_population")]
+# Print summary for each dataset to review mean and medians for the selected columns
+summary(num_sim_flu_CA_new)
+summary(num_sim_flu_LACounty_raw)
+summary(num_vax_rates_quarter_raw)
 
-selected_columns_sim_flu_CA_new <- sim_flu_CA_new[, c("pop", "dx_new", "severe_new", "susceptible")]
-
-
-
-
-summary(selected_columns_sim_flu_CA_new)
-summary(selected_columns_sim_flu_LACounty_raw)
-summary(selected_columns_vax_rates_quarter_raw)
-
-
-range_values_CA_new <- sapply(selected_columns_sim_flu_CA_new, function(x) max(x) - min(x))
-range_values_LACounty_raw <- sapply(selected_columns_sim_flu_LACounty_raw, function(x) max(x) - min(x))
-range_values_vax_raw <- sapply(selected_columns_vax_rates_quarter_raw, function(x) max(x) - min(x))
-
+# Print ranges for each of the selected columns from each dataset
+range_values_CA_new <- sapply(num_sim_flu_CA_new, function(x) max(x) - min(x))
+range_values_LACounty_raw <- sapply(num_sim_flu_LACounty_raw, function(x) max(x) - min(x))
+range_values_vax_raw <- sapply(num_vax_rates_quarter_raw, function(x) max(x) - min(x))
 
 print(range_values_CA_new)
 print(range_values_LACounty_raw)
 print(range_values_vax_raw)
 
 
+# List the unique character values for each of the selected columns in each dataset
+char_sim_flu_CA_new <- list(sim_flu_CA_new$race_eth, sim_flu_CA_new$age_category, sim_flu_CA_new$sex, sim_flu_CA_new$county)
+char_sim_flu_LACounty_raw <- list(sim_flu_LACounty_raw$race_eth, sim_flu_LACounty_raw$age_category, sim_flu_LACounty_raw$sex)
+char_ca_vax_rates_quarter_raw <- list(ca_vax_rates_quarter_raw$county_name, ca_vax_rates_quarter_raw$demographic_category, ca_vax_rates_quarter_raw$demographic_value)
 
+# Print unique values from eachh of the selected columns
+unique_CA_new <- lapply(char_sim_flu_CA_new, unique)
+unique_LACounty_raw <- lapply(char_sim_flu_LACounty_raw, unique)
+unique_vax_raw <- lapply(char_ca_vax_rates_quarter_raw, unique)
 
-
-
-
-
-char_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("race_eth", "age_category", "sex")]
-                                                                   
-char_sim_flu_CA_new <- sim_flu_CA_new[, c("race_eth", "age_category", "sex", "county")]
-                                                                  
-char_ca_vax_rates_quarter_raw <- ca_vax_rates_quarter_raw[, c("county_name", "demographic_category", "demographic_value")]
-
-unique(char_sim_flu_LACounty_raw)
-unique(char_sim_flu_CA_new)
-unique(char_ca_vax_rates_quarter_raw)
-
-
--   Numeric: mean, median, range
--   Character: unique values/categories
--   or any other descriptives that will be useful to the analysis
-
+print(unique_CA_new)
+print(unique_LACounty_raw)
+print(unique_vax_raw)
 ```
 
 ### [Describe cleaning that each data source may need]{.underline}
@@ -232,10 +240,29 @@ unique(char_ca_vax_rates_quarter_raw)
 
 -   Data elements that need to be converted to a different type
 
+    For ca_vax_rates,
+
+    -   demographic_value should be a factor
+
+    -   dt_admin should be a date
+
+    -   quarter should be a factor?
+
+    For the sim_flu data (both CA and LA County),
+
+    -   age_category should be a factor
+
+    -   race_eth should be a factor
+
+    -   dt_dx should be a date
+
 -   Data elements that need cleaning or re-categorization
 
-    -   Demographic Category & Demographic Value in the COVID vaccination dataset will have to be cleaned up to match the columns in the flu datasets.
+    -   Remove rows with NA values for some of the data
+    -   in the COVID-19 vaccination dataset, convert demographic category + demographic value information to match the format from the simulated flu rates datasets. Some of the demographic categories also may need additional work to align them with the other two datasets (e.g. "Unknown/undifferentiated" gender)
+    -   In the COVID-19 vaccination dataset, the age categories of "Under 5", "5-11", and "12-17" need to be combined to match the other two dataset categories
+    -   dt_dx in the simulated flu rates LA County data needs to be converted to an R date column
 
 -   Data elements that may be used for future joins (i.e. state, county) County
 
-    -   (sim_flu_LACounty.csv data will need to be joined into the sim_flu_CA.csv dataset)
+    -   sim_flu_LACounty.csv data will need to be joined into the sim_flu_CA.csv dataset
