@@ -55,7 +55,7 @@ print(ca_vax_rates_quarter_raw)
 ```
 
 ```{r import_data_sim_flu_CA.csv -- Shirley Sui}
-# load dataset from group project git repo using read.csv
+# load dataset from group project git repo using read_csv
 # assign it as "sim_flu_CA_raw" to distinguish it as raw data
 sim_flu_CA_raw <- read_csv('./scenario_1/sim_flu_CA.csv')
 ```
@@ -96,7 +96,14 @@ colnames(ca_vax_rates_quarter_raw)
 ![current flu data column names](column_names_flu.png)
 
 ```{r clean_up_names_sim_flu_CA.csv -- Shirley Sui}
-
+# rename columns to match the LA County data
+# then select only the columns that the LA County dataset has
+sim_flu_CA_new <- sim_flu_CA_raw %>%
+  mutate(dx_new = new_infections, recovered_new = new_recovered, susceptible = count_susceptible, infected_current = current_infected, infected_cumulative = cumulative_infected, recovered_cumulative = cumulative_recovered, severe_new = new_severe, severe_cumulative = cumulative_severe, age_category = age_cat, race_eth = race_ethnicity, dt_report = report_date, dt_dx = dt_diagnosis) %>%
+  select(county, dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx, pop)
+  
+# view column names from dataframe to make sure we got what we needed
+colnames(sim_flu_CA_new)
 ```
 
 ```{r clean_up_names_sim_flu_LACounty.csv -- Nicole Fernandez}
@@ -124,13 +131,33 @@ colnames(sim_flu_LACounty_raw)
 
 #### *Identify 5+ data elements required for your specified scenario. If \<5 elements are required to complete the analysis, please choose additional variables of interest in the data set to explore in this milestone.*
 
-From the flu case rates and case severity datasets: - county - age_cat - race_ethnicity - dt_diagnosis - new_infections - new_severe - count_susceptible - pop
+From the flu case rates and case severity datasets: 
+-  county 
+-  age_category 
+-  race_eth 
+-  dt_dx
+-  dx_new
+-  severe_new 
+-  susceptible 
+-  pop
 
-From the COVID vaccination rate data: - County Name - Demographic Category - Demographic Value - Dt Admin - Total Partial Vaccinated - Cumulative Fully Vaccinated - Cumulative At Least ONe Dose - Cumulative Unvaccinated - Cumulative Up To Date Vax - Estimated Population
+From the COVID vaccination rate data: 
+-  County Name 
+-  Demographic Category 
+-  Demographic Value 
+-  Dt Admin 
+-  Total Partial Vaccinated 
+-  Cumulative Fully Vaccinated 
+-  Cumulative At Least ONe Dose 
+-  Cumulative Unvaccinated 
+-  Cumulative Up To Date Vax 
+-  Estimated Population
 
 #### *Utilize functions or resources in RStudio to determine the types of each data element (i.e. character, numeric, factor)*
 
 ```{r data_types -- Ngan Nguyen}
+### we might need to change _raw to the "new" dataframes we set up above ###
+### not sure if we want to select just the columns we specified above? ###
 
 # Figure out data types of each column in the "ca_vax_rates_quarter_raw" data frame  
 ca_vax_col_types <- data.frame(
@@ -158,7 +185,15 @@ print(sim_flu_LACounty_col_types)
 
 #### *Identify the desired type/format for each variable---will you need to convert any columns to numeric or another type?* -- Shirley Sui
 
-##ANSWERHERE##
+For ca_vax_rates,
+-  demographic_value should be a factor
+-  dt_admin should be a date
+-  quarter should be a factor?
+
+For the sim_flu data (both CA and LA County),
+-  age_category should be a factor
+-  race_eth should be a factor
+-  dt_dx should be a date
 
 ### [Provide a basic description of the 5+ data elements]{.underline}
 
