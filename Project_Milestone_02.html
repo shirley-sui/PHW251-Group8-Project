@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="description-of-dataset"><u>Description of dataset</u></h3>
 <section id="what-is-the-data-source-1-2-sentences-on-where-the-data-is-coming-from-dates-included-etc." class="level4">
 <h4 class="anchored" data-anchor-id="what-is-the-data-source-1-2-sentences-on-where-the-data-is-coming-from-dates-included-etc."><em>What is the data source? (1-2 sentences on where the data is coming from, dates included, etc.)</em></h4>
-<p>The data was obtained from the project github repository for the PHW251 R for Public Health course. The data we are using for this project is from a simulated flu outbreak and vaccine update in California. The data is simulated data that represents [describe generally/briefly what is the data] for the entire state of California during [describe the time period].</p>
+<p>The data was obtained from the project github repository for the PHW251 R for Public Health course. The data we are using for this project is from a simulated data that represents flu outbreak and COVID-19 vaccine update in California from 2022 to 2023.</p>
 <p>The three datasets include data on the following (as described in the project page for Scenario 1):</p>
 <ol type="1">
 <li><p>Dataset one (sim_flu_CA.csv) contains weekly data about flu cases and case severity by demographic categories (age category, race, sex) and geographic categories (county) for California counties (except for Los Angeles county);</p></li>
@@ -134,40 +134,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load tidyverse for all data cleaning packages, including readr()</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tidyverse' was built under R version 4.3.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'ggplot2' was built under R version 4.3.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tibble' was built under R version 4.3.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tidyr' was built under R version 4.3.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'readr' was built under R version 4.3.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'purrr' was built under R version 4.3.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'stringr' was built under R version 4.3.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'forcats' was built under R version 4.3.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lubridate' was built under R version 4.3.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ dplyr     1.1.2     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.3     ✔ tibble    3.2.1
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
 ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -177,8 +147,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import the CSV file 'scenario_1/ca_vax_rates_quarter.csv' into a Dataframe in R using read_csv function</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ca_vax_rates_quarter <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"scenario_1/ca_vax_rates_quarter.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import the CSV file 'scenario_1/ca_vax_rates_quarter.csv' into a Dataframe in R using read_csv function</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ca_vax_rates_quarter <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"scenario_1/ca_vax_rates_quarter.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 13533 Columns: 13
 ── Column specification ────────────────────────────────────────────────────────
@@ -191,9 +161,9 @@ date (2): Dt Admin, Quarter
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Assign it as "ca_vax_rates_quarter_raw" to distinguish it as raw data</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ca_vax_rates_quarter_raw <span class="ot">&lt;-</span> ca_vax_rates_quarter</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ca_vax_rates_quarter_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Assign it as "ca_vax_rates_quarter_raw" to distinguish it as raw data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ca_vax_rates_quarter_raw <span class="ot">&lt;-</span> ca_vax_rates_quarter</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ca_vax_rates_quarter_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13,533 × 13
    `County Name` `County Type` `Demographic Category` `Demographic Value`
@@ -216,9 +186,9 @@ date (2): Dt Admin, Quarter
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load dataset from group project git repo using read_csv</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># assign it as "sim_flu_CA_raw" to distinguish it as raw data</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>sim_flu_CA_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'./scenario_1/sim_flu_CA.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load dataset from group project git repo using read_csv</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># assign it as "sim_flu_CA_raw" to distinguish it as raw data</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sim_flu_CA_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'./scenario_1/sim_flu_CA.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 114912 Columns: 18
 ── Column specification ────────────────────────────────────────────────────────
@@ -230,10 +200,32 @@ date  (2): report_date, dt_diagnosis
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim_flu_CA_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 114,912 × 18
+   county         time_int new_infections new_recovered count_susceptible
+   &lt;chr&gt;             &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
+ 1 Alameda County   202240            121             0             46000
+ 2 Alameda County   202241             75           119             45925
+ 3 Alameda County   202242             76            77             45849
+ 4 Alameda County   202243             89            75             45760
+ 5 Alameda County   202244             54            88             45706
+ 6 Alameda County   202245             68            55             45638
+ 7 Alameda County   202246             66            67             45572
+ 8 Alameda County   202247            195            66             45377
+ 9 Alameda County   202248            339           195             45038
+10 Alameda County   202249            160           334             44878
+# ℹ 114,902 more rows
+# ℹ 13 more variables: current_infected &lt;dbl&gt;, cumulative_infected &lt;dbl&gt;,
+#   cumulative_recovered &lt;dbl&gt;, new_unrecovered &lt;dbl&gt;,
+#   cumulative_unrecovered &lt;dbl&gt;, new_severe &lt;dbl&gt;, cumulative_severe &lt;dbl&gt;,
+#   age_cat &lt;chr&gt;, sex &lt;chr&gt;, race_ethnicity &lt;dbl&gt;, report_date &lt;date&gt;,
+#   dt_diagnosis &lt;date&gt;, pop &lt;dbl&gt;</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import the CSV file 'scenario_1/sim_flu_LACounty.csv' into a Dataframe in R using read_csv function</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>sim_flu_LACounty <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"scenario_1/sim_flu_LACounty.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import the CSV file 'scenario_1/sim_flu_LACounty.csv' into a Dataframe in R using read_csv function</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sim_flu_LACounty <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"scenario_1/sim_flu_LACounty.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 2016 Columns: 13
 ── Column specification ────────────────────────────────────────────────────────
@@ -245,25 +237,44 @@ lgl (1): DT_REPORT
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Assign it as "sim_flu_LACounty_raw" to distinguish it as raw data</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sim_flu_LACounty_raw <span class="ot">&lt;-</span> sim_flu_LACounty</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(sim_flu_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Assign it as "sim_flu_LACounty_raw" to distinguish it as raw data</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sim_flu_LACounty_raw <span class="ot">&lt;-</span> sim_flu_LACounty</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim_flu_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,016 × 13
+   DT_DX     AGE_CATEGORY SEX    RACE_ETH         DT_REPORT DX_NEW RECOVERED_NEW
+   &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;            &lt;lgl&gt;      &lt;dbl&gt;         &lt;dbl&gt;
+ 1 03OCT2022 0-17         FEMALE White, Non-Hisp… NA           513             0
+ 2 09OCT2022 0-17         FEMALE White, Non-Hisp… NA           343           508
+ 3 19OCT2022 0-17         FEMALE White, Non-Hisp… NA           340           341
+ 4 26OCT2022 0-17         FEMALE White, Non-Hisp… NA           422           341
+ 5 01NOV2022 0-17         FEMALE White, Non-Hisp… NA           321           421
+ 6 05NOV2022 0-17         FEMALE White, Non-Hisp… NA           366           316
+ 7 07NOV2022 0-17         FEMALE White, Non-Hisp… NA           345           375
+ 8 25NOV2022 0-17         FEMALE White, Non-Hisp… NA           828           336
+ 9 27NOV2022 0-17         FEMALE White, Non-Hisp… NA          1533           819
+10 02DEC2022 0-17         FEMALE White, Non-Hisp… NA           760          1529
+# ℹ 2,006 more rows
+# ℹ 6 more variables: INFECTED_CURRENT &lt;dbl&gt;, INFECTED_CUMULATIVE &lt;dbl&gt;,
+#   RECOVERED_CUMULATIVE &lt;dbl&gt;, SUSCEPTIBLE &lt;dbl&gt;, SEVERE_NEW &lt;dbl&gt;,
+#   SEVERE_CUMULATIVE &lt;dbl&gt;</code></pre>
+</div>
 </div>
 <ul>
 <li>Clean up column names (recommend using snake case, which is lower case text with underscores between words)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the current column names</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>current_colnames <span class="ot">&lt;-</span> <span class="fu">colnames</span>(ca_vax_rates_quarter)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert column names to snake case</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>new_colnames <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, current_colnames))</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the new column names to the data frame</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ca_vax_rates_quarter_raw) <span class="ot">&lt;-</span> new_colnames</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the updated column names</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ca_vax_rates_quarter_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the current column names</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>current_colnames <span class="ot">&lt;-</span> <span class="fu">colnames</span>(ca_vax_rates_quarter)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert column names to snake case</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>new_colnames <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, current_colnames))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the new column names to the data frame</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ca_vax_rates_quarter_raw) <span class="ot">&lt;-</span> new_colnames</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the updated column names</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ca_vax_rates_quarter_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "county_name"                  "county_type"                 
  [3] "demographic_category"         "demographic_value"           
@@ -281,14 +292,14 @@ lgl (1): DT_REPORT
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename columns to match the LA County data</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># then select only the columns that the LA County dataset has</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sim_flu_CA_new <span class="ot">&lt;-</span> sim_flu_CA_raw <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dx_new =</span> new_infections, <span class="at">recovered_new =</span> new_recovered, <span class="at">susceptible =</span> count_susceptible, <span class="at">infected_current =</span> current_infected, <span class="at">infected_cumulative =</span> cumulative_infected, <span class="at">recovered_cumulative =</span> cumulative_recovered, <span class="at">severe_new =</span> new_severe, <span class="at">severe_cumulative =</span> cumulative_severe, <span class="at">age_category =</span> age_cat, <span class="at">race_eth =</span> race_ethnicity, <span class="at">dt_report =</span> report_date, <span class="at">dt_dx =</span> dt_diagnosis) <span class="sc">%&gt;%</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx, pop)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># view column names from dataframe to make sure we got what we needed</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sim_flu_CA_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename columns to match the LA County data</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># then select only the columns that the LA County dataset has</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>sim_flu_CA_new <span class="ot">&lt;-</span> sim_flu_CA_raw <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dx_new =</span> new_infections, <span class="at">recovered_new =</span> new_recovered, <span class="at">susceptible =</span> count_susceptible, <span class="at">infected_current =</span> current_infected, <span class="at">infected_cumulative =</span> cumulative_infected, <span class="at">recovered_cumulative =</span> cumulative_recovered, <span class="at">severe_new =</span> new_severe, <span class="at">severe_cumulative =</span> cumulative_severe, <span class="at">age_category =</span> age_cat, <span class="at">race_eth =</span> race_ethnicity, <span class="at">dt_report =</span> report_date, <span class="at">dt_dx =</span> dt_diagnosis) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx, pop)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># view column names from dataframe to make sure we got what we needed</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sim_flu_CA_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "county"               "dx_new"               "recovered_new"       
  [4] "susceptible"          "infected_current"     "infected_cumulative" 
@@ -298,15 +309,15 @@ lgl (1): DT_REPORT
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change to snake case</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sim_flu_LACounty_raw) <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">gsub</span>(<span class="st">' '</span>, <span class="st">'_'</span>, <span class="fu">colnames</span>(sim_flu_LACounty_raw)))</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange column names from dataset in specific order as written in code</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>sim_flu_LACounty_raw <span class="ot">&lt;-</span> <span class="fu">select</span>(sim_flu_LACounty_raw, <span class="fu">c</span>(dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx))</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># View column names from dataframe to make sure they are in the desired order</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sim_flu_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change to snake case</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sim_flu_LACounty_raw) <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">gsub</span>(<span class="st">' '</span>, <span class="st">'_'</span>, <span class="fu">colnames</span>(sim_flu_LACounty_raw)))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange column names from dataset in specific order as written in code</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>sim_flu_LACounty_raw <span class="ot">&lt;-</span> <span class="fu">select</span>(sim_flu_LACounty_raw, <span class="fu">c</span>(dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx))</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># View column names from dataframe to make sure they are in the desired order</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sim_flu_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "dx_new"               "recovered_new"        "susceptible"         
  [4] "infected_current"     "infected_cumulative"  "recovered_cumulative"
@@ -348,25 +359,25 @@ lgl (1): DT_REPORT
 <section id="utilize-functions-or-resources-in-rstudio-to-determine-the-types-of-each-data-element-i.e.-character-numeric-factor" class="level4">
 <h4 class="anchored" data-anchor-id="utilize-functions-or-resources-in-rstudio-to-determine-the-types-of-each-data-element-i.e.-character-numeric-factor"><em>Utilize functions or resources in RStudio to determine the types of each data element (i.e.&nbsp;character, numeric, factor)</em></h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure out data types of each column in the "ca_vax_rates_quarter_raw" data frame  </span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ca_vax_col_types <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">coltypes_ca_vax =</span> <span class="fu">sapply</span>(ca_vax_rates_quarter_raw, typeof),</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure out data types of each column in the "sim_flu_CA_raw" data frame  </span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>sim_flu_CA_col_types <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">coltypes_flu_CA =</span> <span class="fu">sapply</span>(sim_flu_CA_new, typeof),</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure out data types of each column in the "sim_flu_LACounty_raw" data frame  </span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>sim_flu_LACounty_col_types <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">coltypes_flu_LACounty =</span> <span class="fu">sapply</span>(sim_flu_LACounty_raw, typeof),</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ca_vax_col_types)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure out data types of each column in the "ca_vax_rates_quarter_raw" data frame  </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ca_vax_col_types <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">coltypes_ca_vax =</span> <span class="fu">sapply</span>(ca_vax_rates_quarter_raw, typeof),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure out data types of each column in the "sim_flu_CA_raw" data frame  </span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>sim_flu_CA_col_types <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">coltypes_flu_CA =</span> <span class="fu">sapply</span>(sim_flu_CA_new, typeof),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure out data types of each column in the "sim_flu_LACounty_raw" data frame  </span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>sim_flu_LACounty_col_types <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">coltypes_flu_LACounty =</span> <span class="fu">sapply</span>(sim_flu_LACounty_raw, typeof),</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ca_vax_col_types)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                             coltypes_ca_vax
 county_name                        character
@@ -383,7 +394,7 @@ suppress_data                        logical
 cumulative_up_to_date_vax             double
 quarter                               double</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim_flu_CA_col_types)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim_flu_CA_col_types)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     coltypes_flu_CA
 county                     character
@@ -402,7 +413,7 @@ dt_report                     double
 dt_dx                         double
 pop                           double</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim_flu_LACounty_col_types)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim_flu_LACounty_col_types)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     coltypes_flu_LACounty
 dx_new                              double
@@ -435,15 +446,15 @@ dt_dx                            character</code></pre>
 <li>or any other descriptives that will be useful to the analysis</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select desired numeric data elements from each dataframe</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>num_sim_flu_LACounty_raw <span class="ot">&lt;-</span> sim_flu_LACounty_raw[, <span class="fu">c</span>(<span class="st">"dx_new"</span>, <span class="st">"severe_new"</span>, <span class="st">"susceptible"</span>)]</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>num_vax_rates_quarter_raw <span class="ot">&lt;-</span> ca_vax_rates_quarter_raw[, <span class="fu">c</span>( <span class="st">"total_partial_vaccinated"</span>, <span class="st">"cumulative_fully_vaccinated"</span>, <span class="st">"cumulative_at_least_one_dose"</span>, <span class="st">"cumulative_unvaccinated"</span>, <span class="st">"cumulative_up_to_date_vax"</span>, <span class="st">"estimated_population"</span>)]</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>num_sim_flu_CA_new <span class="ot">&lt;-</span> sim_flu_CA_new[, <span class="fu">c</span>(<span class="st">"pop"</span>, <span class="st">"dx_new"</span>, <span class="st">"severe_new"</span>, <span class="st">"susceptible"</span>)]</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print summary for each dataset to review mean and medians for the selected columns</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(num_sim_flu_CA_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select desired numeric data elements from each dataframe</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>num_sim_flu_LACounty_raw <span class="ot">&lt;-</span> sim_flu_LACounty_raw[, <span class="fu">c</span>(<span class="st">"dx_new"</span>, <span class="st">"severe_new"</span>, <span class="st">"susceptible"</span>)]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>num_vax_rates_quarter_raw <span class="ot">&lt;-</span> ca_vax_rates_quarter_raw[, <span class="fu">c</span>( <span class="st">"total_partial_vaccinated"</span>, <span class="st">"cumulative_fully_vaccinated"</span>, <span class="st">"cumulative_at_least_one_dose"</span>, <span class="st">"cumulative_unvaccinated"</span>, <span class="st">"cumulative_up_to_date_vax"</span>, <span class="st">"estimated_population"</span>)]</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>num_sim_flu_CA_new <span class="ot">&lt;-</span> sim_flu_CA_new[, <span class="fu">c</span>(<span class="st">"pop"</span>, <span class="st">"dx_new"</span>, <span class="st">"severe_new"</span>, <span class="st">"susceptible"</span>)]</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print summary for each dataset to review mean and medians for the selected columns</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(num_sim_flu_CA_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      pop               dx_new          severe_new       susceptible    
  Min.   :     0.0   Min.   :    0.0   Min.   :  0.000   Min.   :     0  
@@ -453,7 +464,7 @@ dt_dx                            character</code></pre>
  3rd Qu.:  4700.0   3rd Qu.:   28.0   3rd Qu.:  0.000   3rd Qu.:  3577  
  Max.   :310091.0   Max.   :12672.0   Max.   :562.000   Max.   :310091  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(num_sim_flu_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(num_sim_flu_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     dx_new        severe_new       susceptible     
  Min.   :    0   Min.   :   0.00   Min.   :    884  
@@ -463,7 +474,7 @@ dt_dx                            character</code></pre>
  3rd Qu.: 1954   3rd Qu.:  26.00   3rd Qu.: 194900  
  Max.   :51350   Max.   :1107.00   Max.   :1255986  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(num_vax_rates_quarter_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(num_vax_rates_quarter_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> total_partial_vaccinated cumulative_fully_vaccinated
  Min.   :      0.0        Min.   :       0           
@@ -490,22 +501,22 @@ dt_dx                            character</code></pre>
  Max.   :20036369    
  NA's   :2061        </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print ranges for each of the selected columns from each dataset</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>range_values_CA_new <span class="ot">&lt;-</span> <span class="fu">sapply</span>(num_sim_flu_CA_new, <span class="cf">function</span>(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>range_values_LACounty_raw <span class="ot">&lt;-</span> <span class="fu">sapply</span>(num_sim_flu_LACounty_raw, <span class="cf">function</span>(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>range_values_vax_raw <span class="ot">&lt;-</span> <span class="fu">sapply</span>(num_vax_rates_quarter_raw, <span class="cf">function</span>(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(range_values_CA_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print ranges for each of the selected columns from each dataset</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>range_values_CA_new <span class="ot">&lt;-</span> <span class="fu">sapply</span>(num_sim_flu_CA_new, <span class="cf">function</span>(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>range_values_LACounty_raw <span class="ot">&lt;-</span> <span class="fu">sapply</span>(num_sim_flu_LACounty_raw, <span class="cf">function</span>(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>range_values_vax_raw <span class="ot">&lt;-</span> <span class="fu">sapply</span>(num_vax_rates_quarter_raw, <span class="cf">function</span>(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(range_values_CA_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        pop      dx_new  severe_new susceptible 
      310091       12672         562      310091 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(range_values_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(range_values_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     dx_new  severe_new susceptible 
       51350        1107     1255102 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(range_values_vax_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(range_values_vax_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    total_partial_vaccinated  cumulative_fully_vaccinated 
                           NA                           NA 
@@ -514,17 +525,17 @@ cumulative_at_least_one_dose      cumulative_unvaccinated
    cumulative_up_to_date_vax         estimated_population 
                      4590329                           NA </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List the unique character values for each of the selected columns in each dataset</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>char_sim_flu_CA_new <span class="ot">&lt;-</span> <span class="fu">list</span>(sim_flu_CA_new<span class="sc">$</span>race_eth, sim_flu_CA_new<span class="sc">$</span>age_category, sim_flu_CA_new<span class="sc">$</span>sex, sim_flu_CA_new<span class="sc">$</span>county)</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>char_sim_flu_LACounty_raw <span class="ot">&lt;-</span> <span class="fu">list</span>(sim_flu_LACounty_raw<span class="sc">$</span>race_eth, sim_flu_LACounty_raw<span class="sc">$</span>age_category, sim_flu_LACounty_raw<span class="sc">$</span>sex)</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>char_ca_vax_rates_quarter_raw <span class="ot">&lt;-</span> <span class="fu">list</span>(ca_vax_rates_quarter_raw<span class="sc">$</span>county_name, ca_vax_rates_quarter_raw<span class="sc">$</span>demographic_category, ca_vax_rates_quarter_raw<span class="sc">$</span>demographic_value)</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print unique values from eachh of the selected columns</span></span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>unique_CA_new <span class="ot">&lt;-</span> <span class="fu">lapply</span>(char_sim_flu_CA_new, unique)</span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>unique_LACounty_raw <span class="ot">&lt;-</span> <span class="fu">lapply</span>(char_sim_flu_LACounty_raw, unique)</span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>unique_vax_raw <span class="ot">&lt;-</span> <span class="fu">lapply</span>(char_ca_vax_rates_quarter_raw, unique)</span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_CA_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List the unique character values for each of the selected columns in each dataset</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>char_sim_flu_CA_new <span class="ot">&lt;-</span> <span class="fu">list</span>(sim_flu_CA_new<span class="sc">$</span>race_eth, sim_flu_CA_new<span class="sc">$</span>age_category, sim_flu_CA_new<span class="sc">$</span>sex, sim_flu_CA_new<span class="sc">$</span>county)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>char_sim_flu_LACounty_raw <span class="ot">&lt;-</span> <span class="fu">list</span>(sim_flu_LACounty_raw<span class="sc">$</span>race_eth, sim_flu_LACounty_raw<span class="sc">$</span>age_category, sim_flu_LACounty_raw<span class="sc">$</span>sex)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>char_ca_vax_rates_quarter_raw <span class="ot">&lt;-</span> <span class="fu">list</span>(ca_vax_rates_quarter_raw<span class="sc">$</span>county_name, ca_vax_rates_quarter_raw<span class="sc">$</span>demographic_category, ca_vax_rates_quarter_raw<span class="sc">$</span>demographic_value)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print unique values from eachh of the selected columns</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>unique_CA_new <span class="ot">&lt;-</span> <span class="fu">lapply</span>(char_sim_flu_CA_new, unique)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>unique_LACounty_raw <span class="ot">&lt;-</span> <span class="fu">lapply</span>(char_sim_flu_LACounty_raw, unique)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>unique_vax_raw <span class="ot">&lt;-</span> <span class="fu">lapply</span>(char_ca_vax_rates_quarter_raw, unique)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_CA_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] 1 2 3 4 5 6 7
@@ -556,7 +567,7 @@ cumulative_at_least_one_dose      cumulative_unvaccinated
 [52] "Trinity County"         "Tulare County"          "Tuolumne County"       
 [55] "Ventura County"         "Yolo County"            "Yuba County"           </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_LACounty_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "White, Non-Hispanic"                                   
@@ -573,7 +584,7 @@ cumulative_at_least_one_dose      cumulative_unvaccinated
 [[3]]
 [1] "FEMALE" "MALE"  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_vax_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_vax_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
  [1] "Alameda"         "Alpine"          "Amador"          "Butte"          
@@ -641,7 +652,7 @@ cumulative_at_least_one_dose      cumulative_unvaccinated
 <li><p>Data elements that need cleaning or re-categorization</p>
 <ul>
 <li>Remove rows with NA values for some of the data</li>
-<li>in the COVID-19 vaccination dataset, convert demographic category + demographic value information to match the format from the simulated flu rates datasets. Some of the demographic categories also may need additional work to align them with the other two datasets (e.g.&nbsp;“Unknown/undifferentiated” gender)</li>
+<li>In the COVID-19 vaccination dataset, convert demographic category + demographic value information to match the format from the simulated flu rates datasets. Some of the demographic categories also may need additional work to align them with the other two datasets (e.g.&nbsp;“Unknown/undifferentiated” gender)</li>
 <li>In the COVID-19 vaccination dataset, the age categories of “Under 5”, “5-11”, and “12-17” need to be combined to match the other two dataset categories</li>
 <li>dt_dx in the simulated flu rates LA County data needs to be converted to an R date column</li>
 </ul></li>
