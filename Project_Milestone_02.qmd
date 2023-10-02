@@ -118,41 +118,25 @@ colnames(sim_flu_LACounty_raw)
 From the flu case rates and case severity datasets:
 
 -   county
-
 -   age_category
-
 -   race_eth
-
 -   dt_dx
-
 -   dx_new
-
 -   severe_new
-
 -   susceptible
-
 -   pop
 
 From the COVID vaccination rate data:
 
 -   County Name
-
 -   Demographic Category
-
 -   Demographic Value
-
 -   Dt Admin
-
 -   Total Partial Vaccinated
-
 -   Cumulative Fully Vaccinated
-
 -   Cumulative At Least ONe Dose
-
 -   Cumulative Unvaccinated
-
 -   Cumulative Up To Date Vax
-
 -   Estimated Population
 
 #### *Utilize functions or resources in RStudio to determine the types of each data element (i.e. character, numeric, factor)*
@@ -185,9 +169,17 @@ print(sim_flu_LACounty_col_types)
 
 #### *Identify the desired type/format for each variable---will you need to convert any columns to numeric or another type?* -- Shirley Sui
 
-For ca_vax_rates, - demographic_value should be a factor - dt_admin should be a date - quarter should be a factor?
+For ca_vax_rates,
 
-For the sim_flu data (both CA and LA County), - age_category should be a factor - race_eth should be a factor - dt_dx should be a date
+-   demographic_value should be a factor
+-   dt_admin should be a date
+-   quarter should be a factor
+
+For the sim_flu data (both CA and LA County),
+
+-   age_category should be a factor
+-   race_eth should be a factor
+-   dt_dx should be a date
 
 ### [Provide a basic description of the 5+ data elements]{.underline}
 
@@ -223,7 +215,7 @@ char_sim_flu_CA_new <- list(sim_flu_CA_new$race_eth, sim_flu_CA_new$age_category
 char_sim_flu_LACounty_raw <- list(sim_flu_LACounty_raw$race_eth, sim_flu_LACounty_raw$age_category, sim_flu_LACounty_raw$sex)
 char_ca_vax_rates_quarter_raw <- list(ca_vax_rates_quarter_raw$county_name, ca_vax_rates_quarter_raw$demographic_category, ca_vax_rates_quarter_raw$demographic_value)
 
-# Print unique values from eachh of the selected columns
+# Print unique values from each of the selected columns
 unique_CA_new <- lapply(char_sim_flu_CA_new, unique)
 unique_LACounty_raw <- lapply(char_sim_flu_LACounty_raw, unique)
 unique_vax_raw <- lapply(char_ca_vax_rates_quarter_raw, unique)
@@ -244,17 +236,13 @@ print(unique_vax_raw)
     For ca_vax_rates,
 
     -   demographic_value should be a factor
-
     -   dt_admin should be a date
-
-    -   quarter should be a factor?
+    -   quarter should be a factor
 
     For the sim_flu data (both CA and LA County),
 
     -   age_category should be a factor
-
     -   race_eth should be a factor
-
     -   dt_dx should be a date
 
 -   Data elements that need cleaning or re-categorization
