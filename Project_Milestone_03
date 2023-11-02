@@ -8,10 +8,24 @@ editor: visual
 Project Milestone #3
 
 Clean each dataset and include descriptive statistics for relevant data elements
+The sim_flu_CA.csv file and sim_flu_LACounty.csv file together represent simulated morbidity for the entire state of California. While it’s certainly possible for data from different sources to adhere to a format standard, one of the challenges of working with secondary data is that it often does not work out that way. Therefore to prepare each dataset (milestone #3) so that they can be combined into one, whole state, dataset you will need to do the following:
+
+Flu morbidity datasets (from CA and LA County)
+Recode column names, values, or formats that are in discordant (dates, etc)
+Combine morbidity datasets into a single dataset
+Select demographic and geographic strata (s) of interest
+Aggregate the data into a new dataframe to  include only one row per strata of interest
+
+Vaccination dataset 
+Recode values to be consistent with morbidity datasets so they can be joined
+Select vaccination time frame that fits best with morbidity data and subset appropriately
+Select demographic strata(s) of interest
+Create a vaccination rate metric and summarize to include only one row per strata of interest
 
 ```{r load libraries}
 # Load tidyverse for all data cleaning packages, including readr()
 library(tidyverse)
+library(readr)
 ```
 1) Subset rows or columns, as needed
 
