@@ -1,0 +1,39 @@
+---
+  title: "Project_Milestone_03"
+author: "Ngan Nguyen, Nicole Fernandez, Shirley Sui"
+format: html
+editor: visual
+---
+  
+Project Milestone #3
+
+Clean each dataset and include descriptive statistics for relevant data elements
+
+```{r load libraries}
+# Load tidyverse for all data cleaning packages, including readr()
+library(tidyverse)
+```
+1) Subset rows or columns, as needed
+
+2) Create new variables needed for analysis (minimum 2)
+     New variables should be created based on existing columns; for example
+        Calculating a rate
+        Combining character strings
+        Aggregation
+
+3) Clean variables needed for analysis (minimum 2)
+     Examples
+        Recode invalid values
+        Handle missing data
+        Recode categories
+
+4) Data re-structured as needed (aggregated/summarized and/or pivoted)
+5) Data dictionary based on clean dataset (minimum 4 data elements), including:
+     Variable name
+     Data type
+     Description
+6) One or more tables with descriptive statistics for 4 data elements
+
+7) Html output that is professionally prepared for presentation
+     Only the necessary information is outputted (you should suppress, for example, entire data frame outputs)
+     Use of headers and sub headers to create an organized document
