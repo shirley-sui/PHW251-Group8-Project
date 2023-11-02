@@ -27,6 +27,70 @@ Create a vaccination rate metric and summarize to include only one row per strat
 library(tidyverse)
 library(readr)
 ```
+
+#Loaded dataset from Project Milestone #2
+
+```{r import_data_ca_vax_rates_quarter.csv -- Ngan Nguyen}
+#Import the CSV file 'scenario_1/ca_vax_rates_quarter.csv' into a Dataframe in R using read_csv function
+ca_vax_rates_quarter <- read_csv("scenario_1/ca_vax_rates_quarter.csv")
+
+#Assign it as "ca_vax_rates_quarter_raw" to distinguish it as raw data
+ca_vax_rates_quarter_raw <- ca_vax_rates_quarter
+print(ca_vax_rates_quarter_raw)
+```
+
+```{r import_data_sim_flu_CA.csv -- Shirley Sui}
+# load dataset from group project git repo using read_csv
+# assign it as "sim_flu_CA_raw" to distinguish it as raw data
+sim_flu_CA_raw <- read_csv('./scenario_1/sim_flu_CA.csv')
+print(sim_flu_CA_raw)
+```
+
+```{r import_data_sim_flu_LACounty.csv -- Nicole Fernandez}
+#Import the CSV file 'scenario_1/sim_flu_LACounty.csv' into a Dataframe in R using read_csv function
+sim_flu_LACounty <- read_csv("scenario_1/sim_flu_LACounty.csv")
+#Assign it as "sim_flu_LACounty_raw" to distinguish it as raw data
+sim_flu_LACounty_raw <- sim_flu_LACounty
+print(sim_flu_LACounty_raw)
+```
+
+-   Clean up column names (recommend using snake case, which is lower case text with underscores between words)
+
+```{r clean_up_names_ca_vax_rates_quarter.csv -- Ngan Nguyen}
+# Get the current column names
+current_colnames <- colnames(ca_vax_rates_quarter)
+
+# Convert column names to snake case
+new_colnames <- tolower(gsub(" ", "_", current_colnames))
+
+# Assign the new column names to the data frame
+colnames(ca_vax_rates_quarter_raw) <- new_colnames
+
+# Print the updated column names
+colnames(ca_vax_rates_quarter_raw)
+```
+```{r clean_up_names_sim_flu_CA.csv -- Shirley Sui}
+# rename columns to match the LA County data
+# then select only the columns that the LA County dataset has
+sim_flu_CA_new <- sim_flu_CA_raw %>%
+  mutate(dx_new = new_infections, recovered_new = new_recovered, susceptible = count_susceptible, infected_current = current_infected, infected_cumulative = cumulative_infected, recovered_cumulative = cumulative_recovered, severe_new = new_severe, severe_cumulative = cumulative_severe, age_category = age_cat, race_eth = race_ethnicity, dt_report = report_date, dt_dx = dt_diagnosis) %>%
+  select(county, dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx, pop)
+  
+# view column names from dataframe to make sure we got what we needed
+colnames(sim_flu_CA_new)
+```
+
+```{r clean_up_names_sim_flu_LACounty.csv -- Nicole Fernandez}
+# change to snake case
+colnames(sim_flu_LACounty_raw) <- tolower(gsub(' ', '_', colnames(sim_flu_LACounty_raw)))
+
+# Arrange column names from dataset in specific order as written in code
+sim_flu_LACounty_raw <- select(sim_flu_LACounty_raw, c(dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx))
+
+
+# View column names from dataframe to make sure they are in the desired order
+colnames(sim_flu_LACounty_raw)
+```
 1) Subset rows or columns, as needed
 
 2) Create new variables needed for analysis (minimum 2)
