@@ -5,23 +5,124 @@ format: html
 editor: visual
 ---
 
-## Quarto
+## Project Milestone #3:
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+## Clean each dataset and include descriptive statistics for relevant data elements
 
-## Running Code
+-   The sim_flu_CA.csv file and sim_flu_LACounty.csv file together represent simulated morbidity for the entire state of California.
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+-   While it's certainly possible for data from different sources to adhere to a format standard, one of the challenges of working with secondary data is that it often does not work out that way.
 
-```{r}
-1 + 1
+-   Therefore to prepare each dataset (milestone #3) so that they can be combined into one, whole state, dataset you will need to do the following:
+
+```{r load libraries, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 60), tidy = TRUE)
+
+# Load tidyverse for all data cleaning packages
+library(tidyverse)
+library(lubridate)
 ```
 
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
+```{r load dataset}
+#Load data from project milestone #2 in Milestone_2_Clean_Data
+df_vax <- read_csv('./Milestone_2_Clean_Data/ca_vax_rates_quarter_milestone_2.csv')
+df_flu_CA <- read_csv('./Milestone_2_Clean_Data/sim_flu_CA_milestone_2.csv')
+df_flu_LA <- read_csv('./Milestone_2_Clean_Data/sim_flu_LACounty_milestone_2.csv')
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+### [Flu morbidity datasets (from CA and LA County)]{.underline}
+
+-   Recode column names, values, or formats that are in discordant (dates, etc)
+
+```{r cleaning flu_CA}
+
+```
+
+```{r cleaning flu_LA}
+
+```
+
+-   Combine morbidity datasets into a single dataset
+
+```{r combining flu_CA and flu_LA}
+
+```
+
+-   Select demographic and geographic strata (s) of interest
+
+```{r flu - select demo/geo strata of interest}
+
+```
+
+-   Aggregate the data into a new dataframe to include only one row per strata of interest
+
+```{r flu - aggregate data, new df with one row per strata of interest}
+
+```
+
+### [Vaccination dataset]{.underline}
+
+-   Recode values to be consistent with morbidity datasets so they can be joined
+
+```{r cleaning vax}
+
+```
+
+-   Select vaccination time frame that fits best with morbidity data and subset appropriately
+
+```{r subset vax}
+
+```
+
+-   Select demographic strata(s) of interest
+
+```{r vax - select demo/geo strata of interest}
+
+```
+
+-   Create a vaccination rate metric and summarize to include only one row per strata of interest
+
+```{r vax - vax rate metric, summarize to include one row per strata of interest}
+
+```
+
+1)  Subset rows or columns, as needed
+
+2)  Create new variables needed for analysis (minimum 2)
+
+    New variables should be created based on existing columns;
+
+    for example
+
+    -   Calculating a rate;
+
+    -   Combining character strings
+
+    -   Aggregation
+
+3)  Clean variables needed for analysis (minimum 2)
+
+    Examples
+
+    -   Recode invalid values
+
+    -   Handle missing data
+
+    -   Recode categories
+
+4)  Data re-structured as needed (aggregated/summarized and/or pivoted)
+
+5)  Data dictionary based on clean dataset (minimum 4 data elements), including:
+
+    -   Variable name
+    -   Data type
+    -   Description
+
+6)  One or more tables with descriptive statistics for 4 data elements
+
+7)  Html output that is professionally prepared for presentation
+
+    -   Only the necessary information is outputted (you should suppress, for example, entire data frame outputs)
+
+    -   Use of headers and sub headers to create an organized document
