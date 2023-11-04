@@ -61,7 +61,7 @@ print(sim_flu_CA_raw)
 ```{r import_data_sim_flu_LACounty.csv -- Nicole Fernandez}
 
 #Import the CSV file 'scenario_1/sim_flu_LACounty.csv' into a Dataframe in R using read_csv function
-sim_flu_LACounty <- read_csv("scenario_1/sim_flu_LACounty.csv")
+sim_flu_LACounty <- read_csv("scenario_1/sim_flu_LACounty_pop.csv")
 
 
 
@@ -94,8 +94,8 @@ colnames(ca_vax_rates_quarter_raw)
 # rename columns to match the LA County data
 # then select only the columns that the LA County dataset has
 sim_flu_CA_new <- sim_flu_CA_raw %>%
-  mutate(dx_new = new_infections, recovered_new = new_recovered, susceptible = count_susceptible, infected_current = current_infected, infected_cumulative = cumulative_infected, recovered_cumulative = cumulative_recovered, severe_new = new_severe, severe_cumulative = cumulative_severe, age_category = age_cat, race_eth = race_ethnicity, dt_report = report_date, dt_dx = dt_diagnosis) %>%
-  select(county, dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx, pop)
+  mutate(dx_new = new_infections, recovered_new = new_recovered, susceptible = count_susceptible, infected_current = current_infected, infected_cumulative = cumulative_infected, recovered_cumulative = cumulative_recovered, severe_new = new_severe, severe_cumulative = cumulative_severe, age_category = age_cat, race_eth = race_ethnicity, dt_report = report_date, dt_dx = dt_diagnosis, population = pop) %>%
+  select(county, dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx, population)
   
 # view column names from dataframe to make sure we got what we needed
 colnames(sim_flu_CA_new)
@@ -113,7 +113,7 @@ colnames(sim_flu_LACounty_raw) <- tolower(gsub(' ', '_', colnames(sim_flu_LACoun
 
 
 #Arrange column names from dataset in specific order as written in code
-sim_flu_LACounty_raw <- select(sim_flu_LACounty_raw, c(dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx))
+sim_flu_LACounty_raw <- select(sim_flu_LACounty_raw, c(dx_new, recovered_new, susceptible, infected_current, infected_cumulative, recovered_cumulative, severe_new, severe_cumulative, age_category, sex, race_eth, dt_report, dt_dx, population))
 
 
 #View column names from dataframe to make sure they are in the desired order
@@ -135,7 +135,7 @@ From the flu case rates and case severity datasets:
 -   dx_new
 -   severe_new
 -   susceptible
--   pop
+-   population
 
 From the COVID vaccination rate data:
 
@@ -200,11 +200,11 @@ For the sim_flu data (both CA and LA County),
 
 ```{r data_summary -- Nicole Fernandez}
 # Select desired numeric data elements from each dataframe
-num_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("dx_new", "severe_new", "susceptible")]
+num_sim_flu_LACounty_raw <- sim_flu_LACounty_raw[, c("dx_new", "severe_new", "susceptible", "population")]
 
 num_vax_rates_quarter_raw <- ca_vax_rates_quarter_raw[, c( "total_partial_vaccinated", "cumulative_fully_vaccinated", "cumulative_at_least_one_dose", "cumulative_unvaccinated", "cumulative_up_to_date_vax", "estimated_population")]
 
-num_sim_flu_CA_new <- sim_flu_CA_new[, c("pop", "dx_new", "severe_new", "susceptible")]
+num_sim_flu_CA_new <- sim_flu_CA_new[, c("dx_new", "severe_new", "susceptible", "population")]
 
 # Print summary for each dataset to review mean and medians for the selected columns
 summary(num_sim_flu_CA_new)
