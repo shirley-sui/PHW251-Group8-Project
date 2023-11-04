@@ -35,11 +35,59 @@ df_flu_LA <- read_csv('./Milestone_2_Clean_Data/sim_flu_LACounty_milestone_2.csv
 
 -   Recode column names, values, or formats that are in discordant (dates, etc)
 
+    -   Reviewed all columns in the datasets resulting from last milestone's initial data cleaning
+
+    -   Potentially discordant columns identified via review of codebook:
+
+    -   county (does not exist in LA data)
+
+        -   needs to be added as a column in LA dataframe
+
+    -   age_category
+
+        -   both use the same categories
+        -   needs to be set as factor in both dataframes (currently character)
+
+    -   sex
+
+        -   both use the same categories
+        -   needs to be set as factor in both dataframes (currently character)
+
+    -   race_eth
+
+        -   in flu_CA - plain text and numbered, needs to be set as factor and recoded
+        -   in flu_LA - plain text, needs to be set as factor
+
+    -   dt_report
+
+        -   correct format, but all NA values in flu_LA - can calculate using codebook definition
+        -   calculate values in flu_LA - dt_report = last day of epi_week for dt_dx (dt_dx might need to be converted to date format before doing this calculation)
+
+    -   dt_dx
+
+        -   codebook recommends not to use this for flu_CA - can instead use dt_report
+        -   remove from both dataframes after dt_report is calculated for flu_LA
+
 ```{r cleaning flu_CA}
+# age_category & sex - format as factor
+
+# recode race_eth using codebook, format as factor
+
+# remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA)
 
 ```
 
 ```{r cleaning flu_LA}
+# add county column in position 1, with value being "Los Angeles County"
+
+# age_category & sex & race_eth - format as factor
+
+# dt_report - calculate using definition from codebook
+# 1) convert dt_dx to date format
+# 2) calculate: dt_report = last day of epi_week for dt_dx
+# 3) format of result should be yyyy-mm-dd to match flu_CA data
+
+# remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA)
 
 ```
 
