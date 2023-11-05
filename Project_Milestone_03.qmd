@@ -22,6 +22,7 @@ knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 60), tidy = TRUE)
 # Load tidyverse for all data cleaning packages
 library(tidyverse)
 library(lubridate)
+library(dplyr)
 ```
 
 ```{r load dataset}
@@ -145,14 +146,25 @@ df_flu_clean <- bind_rows(df_flu_CA_clean, df_flu_LA_clean)
 ### [Vaccination dataset]{.underline}
 
 -   Recode values to be consistent with morbidity datasets so they can be joined. Reviewed all columns in the datasets resulting from last milestone's initial data cleaning
+    -   Aggregate data to manage duplication
     -   county_name
-        -   Only has the nsame of the county, unlike flu_CA country names which has the word "County" included with the country name
+        -   Only has the name of the county, unlike flu_CA country names which has the word "County" included with the country name
     -   county_type
         -   Not necessarily needed to be the same as the other two dataset, currently character
+        -   Remove county type from data frame as there is only one value "MIXED"
     -   demographic_category
+        -   There are three categories within this column: Age group, Gender, and Race/Ethnicity
+        -   Pivot_wide to split the column into three columns
+        -   Rename the column Age group to age_category, Gender to sex, and Race/Ethnicity to race_eth to match with the other two data frames
     -   demographic_value
+        -   The value is based on the demographic categories:
+            -   age_catgory: Under 5, 5 -11, 12 - 17, 18-49, 50-64, 65+
+            -   sex: Male, Female, Unknown/unidentified
+            -   race_eth: American Indian or Alaska Native, Asian, Black or African American, Latino, Multiracial, Native Hawaiian or Other Pacific Islander, Other Race, Unknown, White
+        -   Recode and reclassify the three columns to match with the other two data frames
     -   estimated_population
     -   dt_admin
+        -   Subset the data frame to to 2022 and 2023
     -   total_partial_vaccinated
     -   cumulative_fully_vaccinated
     -   cumulative_at_least_one_dose
@@ -160,33 +172,93 @@ df_flu_clean <- bind_rows(df_flu_CA_clean, df_flu_LA_clean)
     -   suppress_data
     -   cumulative_up_to_date_vax
     -   quarter
-    -   sex
-        -   both use the same categories
-        -   needs to be set as factor in both dataframes (currently character)
-    -   race_eth
-        -   in flu_CA - plain text and numbered, needs to be set as factor and recoded
-        -   in flu_LA - plain text, needs to be set as factor
-    -   dt_report
-        -   correct format, but all NA values in flu_LA - can calculate using codebook definition
-        -   calculate values in flu_LA - dt_report = last day of epi_week for dt_dx (dt_dx might need to be converted to date format before doing this calculation)
-    -   dt_dx
-        -   codebook recommends not to use this for flu_CA - can instead use dt_report
-        -   remove from both dataframes after dt_report is calculated for flu_LA
+        -   Remove quarter from data frame
 
-```{r cleaning vax}
-df_vax_clean <- df_vax_LA %>%
-  
+```{r cleaning ca_vax - Kim Nguyen}
+
+# Aggregating data to manage duplicates before pivoting
+aggregated_data <- df_vax %>%
+  group_by(county_name, county_type, estimated_population, dt_admin,
+           total_partial_vaccinated, cumulative_fully_vaccinated, 
+           cumulative_at_least_one_dose,cumulative_unvaccinated, suppress_data, 
+           cumulative_up_to_date_vax, quarter, demographic_category 
+  ) %>%
+  summarise(across(where(is.numeric), sum),  
+            across(where(is.character), toString),  
+            .groups = "drop")
+
+# Update county_name to include "County" and Pivot the aggregated data
+df_ca_vax_clean <- aggregated_data %>%
+  mutate(county_name = paste0(county_name, " County")) %>%
+  pivot_wider(
+    names_from = demographic_category,
+    values_from = demographic_value
+  )
+
+# Rename the "Race/Ethnicity" column, the "Age Group" column, and the "Gender" column
+names(df_ca_vax_clean)[names(df_ca_vax_clean) == "Race/Ethnicity"] <- "race_eth"
+names(df_ca_vax_clean)[names(df_ca_vax_clean) == "Age Group"] <- "age_category"
+names(df_ca_vax_clean)[names(df_ca_vax_clean) == "Gender"] <- "sex"
+
+# Recode race_eth and format as factor
+df_ca_vax_clean <- df_ca_vax_clean %>%
+  mutate(race_eth = as.factor(case_when(
+    race_eth == "White" ~ "White, Non-Hispanic",
+    race_eth == "Black or African American" ~ "Black, Non-Hispanic", 
+    race_eth == "American Indian or Alaska Native" ~ "American Indian or Alaska Native, Non-Hispanic", 
+    race_eth == "Asian" ~ "Asian, Non-Hispanic", 
+    race_eth == "Native Hawaiian or Other Pacific Islander" ~ "Native Hawaiian or Pacific Islander, Non-Hispanic", 
+    race_eth == "Multiracial" ~ "Multiracial (two or more of above races), Non-Hispanic", 
+    race_eth == "Latino" ~ "Hispanic (any race)", 
+    race_eth == "Other Race" ~ "Other Race, Non-Hispanic", 
+    race_eth == "Unknown" ~ "Unknown",  # Add a comma here
+    is.na(race_eth) ~ "NA",
+    TRUE ~ as.character(race_eth)  # Keep other values unchanged
+  )))
+
+# Reclassify age_category to match with sim_flu_CA and sim_flu_LACounty
+df_ca_vax_clean <- df_ca_vax_clean %>%
+  mutate(age_category = case_when(
+    age_category %in% c("Under 5", "12-17", "5-11") ~ "0-17",
+    age_category == "18-49" ~ "18-49",
+    age_category == "50-64" ~ "50-64",
+    age_category == "65+" ~ "65+",
+    is.na(age_category) ~ "NA",
+    TRUE ~ as.character(age_category)
+  ))
+
+# Recode sex to match with sim_flu_CA and sim_flu_LACounty
+df_ca_vax_clean <- df_ca_vax_clean %>%
+  mutate(sex = case_when(
+    sex == "Male" ~ "MALE",
+    sex == "Female" ~ "FEMALE",
+    sex %in% c("Unknown/unidentified") ~ "NA",
+    TRUE ~ as.character(sex)
+  ))
+
+#Remove "county_type" and "quarter" columns
+df_ca_vax_clean <- df_ca_vax_clean %>%
+  select(-quarter, -county_type)
+
+print(df_ca_vax_clean)
+
 ```
 
 -   Select vaccination time frame that fits best with morbidity data and subset appropriately
 
 ```{r subset vax}
+# Convert dt_admin to Date format
+df_ca_vax_clean$dt_admin <- as.Date(df_ca_vax_clean$dt_admin, format = "%d/%m/%Y")
 
+# Subsetting the data for the years 2022 and 2023
+df_ca_vax_clean_clean <- df_ca_vax_clean %>%
+  filter(format(dt_admin, "%Y") %in% c("2022", "2023"))
 ```
 
 -   Select demographic strata(s) of interest
 
 ```{r vax - select demo/geo strata of interest}
+
 
 ```
 
@@ -194,6 +266,19 @@ df_vax_clean <- df_vax_LA %>%
 
 ```{r vax - vax rate metric, summarize to include one row per strata of interest}
 
+# Fully vaccination rate
+df_ca_vax_clean_subset <- df_ca_vax_clean %>%
+  mutate(vaccination_rate = cumulative_fully_vaccinated / estimated_population)
+
+# Summarize to include only one row per stratum of interest
+df_ca_vax_clean_subset <- df_ca_vax_clean_subset %>%
+  group_by(df_ca_vax_clean0$race_eth, df_ca_vax_clean0$age_category, df_ca_vax_clean0$sex) %>% 
+  summarize(
+    mean_vaccination_rate = mean(vaccination_rate, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+print(df_ca_vax_clean_subset)
 ```
 
 1)  Subset rows or columns, as needed
