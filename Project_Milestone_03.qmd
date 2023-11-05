@@ -70,15 +70,28 @@ df_flu_LA <- read_csv('./Milestone_2_Clean_Data/sim_flu_LACounty_milestone_2.csv
 
 ```{r cleaning flu_CA}
 # age_category & sex - format as factor
-
-# recode race_eth using codebook, format as factor
-
+df_flu_CA_clean <- df_flu_CA %>%
+  mutate(age_category = factor(age_category, ordered = is.ordered(age_category)), sex = factor(sex, ordered = is.ordered(sex))) %>%
+# recode race_eth and format as factor
+  mutate(race_eth = as.factor(case_when(
+    race_eth == 1 ~ "White, Non-Hispanic",
+    race_eth == 2 ~ "Black, Non-Hispanic", 
+    race_eth == 3 ~ "American Indian or Alaska Native, Non-Hispanic", 
+    race_eth == 4 ~ "Asian, Non-Hispanic", 
+    race_eth == 5 ~ "Native Hawaiian or Pacific Islander, Non-Hispanic", 
+    race_eth == 6 ~ "Multiracial (two or more of above races), Non-Hispanic", 
+    race_eth == 7 ~ "Hispanic (any race)", 
+    race_eth == 9 ~ "Unknown"
+  ))) %>%
 # remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA)
+  select(!dt_dx)
 
+str(df_flu_CA_clean)
 ```
 
 ```{r cleaning flu_LA}
 # add county column in position 1, with value being "Los Angeles County"
+df_flu_LA_clean <- df_flu_LA %>%
 
 # age_category & sex & race_eth - format as factor
 
@@ -94,6 +107,8 @@ df_flu_LA <- read_csv('./Milestone_2_Clean_Data/sim_flu_LACounty_milestone_2.csv
 -   Combine morbidity datasets into a single dataset
 
 ```{r combining flu_CA and flu_LA}
+# row bind dataframes for flu simulation together
+df_flu_clean <- bind_rows(df_flu_CA_clean, df_flu_LA_clean)
 
 ```
 
@@ -114,7 +129,8 @@ df_flu_LA <- read_csv('./Milestone_2_Clean_Data/sim_flu_LACounty_milestone_2.csv
 -   Recode values to be consistent with morbidity datasets so they can be joined
 
 ```{r cleaning vax}
-
+df_vax_clean <- df_vax_LA %>%
+  
 ```
 
 -   Select vaccination time frame that fits best with morbidity data and subset appropriately
