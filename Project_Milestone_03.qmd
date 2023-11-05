@@ -126,7 +126,34 @@ df_flu_clean <- bind_rows(df_flu_CA_clean, df_flu_LA_clean)
 
 ### [Vaccination dataset]{.underline}
 
--   Recode values to be consistent with morbidity datasets so they can be joined
+-   Recode values to be consistent with morbidity datasets so they can be joined. Reviewed all columns in the datasets resulting from last milestone's initial data cleaning
+    -   county_name
+        -   Only has the nsame of the county, unlike flu_CA country names which has the word "County" included with the country name
+    -   county_type
+        -   Not necessarily needed to be the same as the other two dataset, currently character
+    -   demographic_category
+    -   demographic_value
+    -   estimated_population
+    -   dt_admin
+    -   total_partial_vaccinated
+    -   cumulative_fully_vaccinated
+    -   cumulative_at_least_one_dose
+    -   cumulative_unvaccinated
+    -   suppress_data
+    -   cumulative_up_to_date_vax
+    -   quarter
+    -   sex
+        -   both use the same categories
+        -   needs to be set as factor in both dataframes (currently character)
+    -   race_eth
+        -   in flu_CA - plain text and numbered, needs to be set as factor and recoded
+        -   in flu_LA - plain text, needs to be set as factor
+    -   dt_report
+        -   correct format, but all NA values in flu_LA - can calculate using codebook definition
+        -   calculate values in flu_LA - dt_report = last day of epi_week for dt_dx (dt_dx might need to be converted to date format before doing this calculation)
+    -   dt_dx
+        -   codebook recommends not to use this for flu_CA - can instead use dt_report
+        -   remove from both dataframes after dt_report is calculated for flu_LA
 
 ```{r cleaning vax}
 df_vax_clean <- df_vax_LA %>%
