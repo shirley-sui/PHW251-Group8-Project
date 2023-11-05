@@ -68,7 +68,7 @@ df_flu_LA <- read_csv('./Milestone_2_Clean_Data/sim_flu_LACounty_milestone_2.csv
         -   codebook recommends not to use this for flu_CA - can instead use dt_report
         -   remove from both dataframes after dt_report is calculated for flu_LA
 
-```{r cleaning flu_CA}
+```{r cleaning flu_CA - Shirley}
 # age_category & sex - format as factor
 df_flu_CA_clean <- df_flu_CA %>%
   mutate(age_category = factor(age_category, ordered = is.ordered(age_category)), sex = factor(sex, ordered = is.ordered(sex))) %>%
@@ -83,8 +83,10 @@ df_flu_CA_clean <- df_flu_CA %>%
     race_eth == 7 ~ "Hispanic (any race)", 
     race_eth == 9 ~ "Unknown"
   ))) %>%
-# remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA)
-  select(!dt_dx)
+# Add column for yr_epiweek, calculated from dt_report
+  mutate(yr_epiweek = paste(epiyear(dt_report), epiweek(dt_report), sep = "_")) %>%
+# remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA). Also remove dt_report, no longer needed.
+  select(!c(dt_dx, dt_report))
 
 str(df_flu_CA_clean)
 ```
@@ -99,8 +101,6 @@ df_flu_LA_clean <- data.frame(county = "Los Angeles County", df_flu_LA_clean)
 
 print(df_flu_LA_clean)
 
-
-
 # age_category & sex & race_eth - format as factor
 df_flu_LA_clean$age_category <- factor(df_flu_LA_clean$age_category)
 df_flu_LA_clean$sex <- factor(df_flu_LA_clean$sex)
@@ -109,18 +109,16 @@ df_flu_LA_clean$race_eth <- factor(df_flu_LA_clean$race_eth)
 str(df_flu_LA_clean)
 
 
-# dt_report - calculate using definition from codebook
+# create yr_epiweek, calculated from dt_dx
 
 # 1) convert dt_dx to date format
 df_flu_LA_clean$dt_dx <- as.Date(df_flu_LA_clean$dt_dx, format = "%d%b%Y")
-# 2) calculate: dt_report = last day of epi_week for dt_dx
-df_flu_LA_clean$dt_report <- epiweek(as_date(df_flu_LA_clean$dt_dx))
-# 3) format of result should be yyyy-mm-dd to match flu_CA data
-#Format Successful completed ✓
+# 2) add yr_epiweek column to dataframe
+df_flu_LA_clean$yr_epiweek <- paste(epiyear(df_flu_LA_clean$dt_dx), epiweek(df_flu_LA_clean$dt_dx), sep = "_")
 
 
-# remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA)
-df_flu_LA_clean <- df_flu_LA_clean %>% select(!dt_dx)
+# remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA). Also remove dt_report
+df_flu_LA_clean <- df_flu_LA_clean %>% select(!c(dt_dx,dt_report))
 
 ```
 
