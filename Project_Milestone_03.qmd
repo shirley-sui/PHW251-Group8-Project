@@ -100,7 +100,7 @@ df_flu_LA_clean <- df_flu_LA
 # Add county column in position 1, with value being "Los Angeles County"
 df_flu_LA_clean <- data.frame(county = "Los Angeles County", df_flu_LA_clean)
 
-print(df_flu_LA_clean)
+head(df_flu_LA_clean)
 
 # age_category & sex & race_eth - format as factor
 df_flu_LA_clean$age_category <- factor(df_flu_LA_clean$age_category)
@@ -273,7 +273,7 @@ print(df_ca_vax_clean)
 df_ca_vax_clean <- df_ca_vax_clean %>%
   filter(age_category != "NA")
 
-print(df_ca_vax_clean)
+head(df_ca_vax_clean)
 ```
 
 -   Create a vaccination rate metric and summarize to include only one row per strata of interest
@@ -292,7 +292,7 @@ df_ca_vax_clean_subset <- df_ca_vax_clean_subset %>%
     .groups = "drop"
   )
 
-print(df_ca_vax_clean_subset)
+head(df_ca_vax_clean_subset)
 ```
 
 1)  Subset rows or columns, as needed
@@ -303,7 +303,7 @@ print(df_ca_vax_clean_subset)
 
     for example
 
-    -   Calculating a rate;
+    -   Calculating a rate
 
     -   Combining character strings
 
@@ -326,17 +326,48 @@ print(df_ca_vax_clean_subset)
     -   Variable name
     -   Data type
     -   Description
-```{r data dictionary}
-data_dictionary <- tibble(
-  "Variable" = c("quarter","mean_vaccination_rate","dx_new_rate","severe_new_rate"),
-  "Data Type" = c("numeric","numeric","numeric","numeric"),
-  "Description" = c("Quarter in which flu case was reported (or, for vaccination data, when vaccinations were completed), in the format of year.quarter","Cumulative fully vaccinated (cumulative_fully_vaccinated) divided by total estimated population (estimated_population)","New flu cases (dx_new) divided by population at risk (susceptible)","New severe flu cases (severe_new) divided by new flu cases (dx_new)")
-)
 
-print(data_dictionary)
-```
+    ```{r data dictionary}
+    data_dictionary <- tibble(
+      "Variable" = c("quarter","mean_vaccination_rate","dx_new_rate","severe_new_rate"),
+      "Data Type" = c("numeric","numeric","numeric","numeric"),
+      "Description" = c("Quarter in which flu case was reported (or, for vaccination data, when vaccinations were completed), in the format of year.quarter","Cumulative fully vaccinated (cumulative_fully_vaccinated) divided by total estimated population (estimated_population)","New flu cases (dx_new) divided by population at risk (susceptible)","New severe flu cases (severe_new) divided by new flu cases (dx_new)")
+    )
+
+    print(data_dictionary)
+    ```
 
 6)  One or more tables with descriptive statistics for 4 data elements
+    ```{r descriptive statistics}
+
+flu_quarter <- unique(df_flu_clean_aggregate$quarter)
+ca_vax_quarter <- unique(df_ca_vax_clean$quarter)
+vax_rate_mean_sum <- summary(df_ca_vax_clean_subset$mean_vaccination_rate)
+dx_new_rate_sum <- summary(df_flu_clean_aggregate$dx_new_rate)
+severe_new_rate_sum <- summary(df_flu_clean_aggregate$severe_new_rate)
+
+library(padr)
+library(tibble)
+
+
+max_length <- max(length(flu_quarter), length(ca_vax_quarter))
+flu_quarter_adjusted <- c(flu_quarter, rep(NA, max_length - length(flu_quarter)))
+ca_vax_quarter_adjusted <- c(ca_vax_quarter, rep(NA, max_length - length(ca_vax_quarter)))
+
+summary_quarters_vax <- tibble(
+  flu_quarter = flu_quarter_adjusted,
+  ca_vax_quarter = ca_vax_quarter_adjusted,
+  vax_rate_mean_sum = vax_rate_mean_sum,
+)
+
+summary_stats <- tibble(
+  dx_new_rate_sum = dx_new_rate_sum,
+  severe_new_rate_sum = severe_new_rate_sum
+)
+
+summary_quarters_vax
+summary_stats
+    ```
 
 7)  Html output that is professionally prepared for presentation
 
