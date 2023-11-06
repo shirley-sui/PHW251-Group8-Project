@@ -84,8 +84,8 @@ df_flu_CA_clean <- df_flu_CA %>%
     race_eth == 7 ~ "Hispanic (any race)", 
     race_eth == 9 ~ "Unknown"
   ))) %>%
-# Add column for yr_epiweek, calculated from dt_report
-  mutate(yr_epiweek = paste(epiyear(dt_report), epiweek(dt_report), sep = "_")) %>%
+# Add column for quarter, calculated from dt_report
+  mutate(quarter = quarter(dt_report, with_year = TRUE)) %>%
 # remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA). Also remove dt_report, no longer needed.
   select(!c(dt_dx, dt_report))
 
@@ -114,8 +114,8 @@ str(df_flu_LA_clean)
 
 # 1) convert dt_dx to date format
 df_flu_LA_clean$dt_dx <- as.Date(df_flu_LA_clean$dt_dx, format = "%d%b%Y")
-# 2) add yr_epiweek column to dataframe
-df_flu_LA_clean$yr_epiweek <- paste(epiyear(df_flu_LA_clean$dt_dx), epiweek(df_flu_LA_clean$dt_dx), sep = "_")
+# 2) add quarter column to dataframe
+df_flu_LA_clean$quarter <- quarter(df_flu_LA_clean$dt_dx, with_year = TRUE)
 
 
 # remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA). Also remove dt_report
@@ -140,7 +140,7 @@ df_flu_clean <- bind_rows(df_flu_CA_clean, df_flu_LA_clean)
 ```{r flu - aggregate data by strata of interest - Nicole & Shirley}
 
 # Group data by the county, age_category, and yr_epiweek & look at new & new severe cases only
-df_flu_clean_aggregate <- df_flu_CA_clean %>% group_by(age_category,county,yr_epiweek)%>%
+df_flu_clean_aggregate <- df_flu_CA_clean %>% group_by(age_category,county,quarter)%>%
   summarise(sum_dx_new = sum(dx_new), sum_severe_new = sum(severe_new), dx_new_rate = sum(dx_new)/sum(susceptible), severe_new_rate = sum(severe_new)/sum(dx_new)) #sum dx_new and severe_new
  
 
@@ -261,7 +261,7 @@ df_ca_vax_clean$dt_admin <- as.Date(df_ca_vax_clean$dt_admin, format = "%d/%m/%Y
 df_ca_vax_clean <- df_ca_vax_clean %>%
   filter(format(dt_admin, "%Y") %in% c("2022", "2023")) %>%
 # Add column for yr_epiweek, calculated from dt_admin
-  mutate(yr_epiweek = paste(epiyear(dt_admin), epiweek(dt_admin), sep = "_"))
+  mutate(quarter = quarter(dt_admin, with_year = TRUE))
 
 print(df_ca_vax_clean)
 ```
@@ -286,7 +286,7 @@ df_ca_vax_clean_subset <- df_ca_vax_clean %>%
 
 # Summarize to include only one row per stratum of interest
 df_ca_vax_clean_subset <- df_ca_vax_clean_subset %>%
-  group_by(age_category,county,yr_epiweek) %>% 
+  group_by(age_category,county,quarter) %>% 
   summarize(
     mean_vaccination_rate = mean(vaccination_rate, na.rm = TRUE),
     .groups = "drop"
@@ -326,6 +326,15 @@ print(df_ca_vax_clean_subset)
     -   Variable name
     -   Data type
     -   Description
+```{r data dictionary}
+data_dictionary <- tibble(
+  "Variable" = c("quarter","mean_vaccination_rate","dx_new_rate","severe_new_rate"),
+  "Data Type" = c("numeric","numeric","numeric","numeric"),
+  "Description" = c("Quarter in which flu case was reported (or, for vaccination data, when vaccinations were completed), in the format of year.quarter","Cumulative fully vaccinated (cumulative_fully_vaccinated) divided by total estimated population (estimated_population)","New flu cases (dx_new) divided by population at risk (susceptible)","New severe flu cases (severe_new) divided by new flu cases (dx_new)")
+)
+
+print(data_dictionary)
+```
 
 6)  One or more tables with descriptive statistics for 4 data elements
 
