@@ -188,6 +188,7 @@ strata_of_interest
             -   sex: Male, Female, Unknown/unidentified
             -   race_eth: American Indian or Alaska Native, Asian, Black or African American, Latino, Multiracial, Native Hawaiian or Other Pacific Islander, Other Race, Unknown, White
         -   Recode and reclassify the three columns to match with the other two data frames
+        -   Will choose "age_category" as a point of strata
     -   estimated_population
     -   dt_admin
         -   Subset the data frame to to 2022 and 2023
@@ -279,13 +280,18 @@ df_ca_vax_clean$dt_admin <- as.Date(df_ca_vax_clean$dt_admin, format = "%d/%m/%Y
 # Subsetting the data for the years 2022 and 2023
 df_ca_vax_clean_clean <- df_ca_vax_clean %>%
   filter(format(dt_admin, "%Y") %in% c("2022", "2023"))
+
+print(df_ca_vax_clean)
 ```
 
 -   Select demographic strata(s) of interest
+    -   We choose "age_category" as the demographic data of interest
 
 ```{r vax - select demo/geo strata of interest}
+df_ca_vax_clean <- df_ca_vax_clean %>%
+  filter(age_category != "NA")
 
-
+print(df_ca_vax_clean)
 ```
 
 -   Create a vaccination rate metric and summarize to include only one row per strata of interest
@@ -298,7 +304,7 @@ df_ca_vax_clean_subset <- df_ca_vax_clean %>%
 
 # Summarize to include only one row per stratum of interest
 df_ca_vax_clean_subset <- df_ca_vax_clean_subset %>%
-  group_by(df_ca_vax_clean0$race_eth, df_ca_vax_clean0$age_category, df_ca_vax_clean0$sex) %>% 
+  group_by(age) %>% 
   summarize(
     mean_vaccination_rate = mean(vaccination_rate, na.rm = TRUE),
     .groups = "drop"
