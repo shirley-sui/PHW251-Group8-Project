@@ -133,39 +133,18 @@ df_flu_clean <- bind_rows(df_flu_CA_clean, df_flu_LA_clean)
 
 -   Select demographic and geographic strata (s) of interest
 
-```{r flu - select demo/geo strata of interest - Nicole & Shirley}
-
-# Group data by the county & age_category
-df_flu_clean_aggregate <- df_flu_CA_clean %>% group_by(age_category,county)%>%
-  summarise(sum_dx_new = sum(dx_new)) #sum dx_new
-
-max(df_flu_clean_aggregate$sum_dx_new) # Find highest IR in data  
-#highest IR is San Diego County: 18-49 age group for 606350 newly diagnosed individuals
- 
-
-head(df_flu_clean_aggregate)
-
-# highest_incidence_rate <- df_flu_clean_aggregate %>%
-#   filter(county == "San Diego County" & age_category == "18-49")
-
-```
+    -   We're deciding to choose age_category, county, and yr_epiweek as our strata of interest, looking at new diagnoses only
 
 -   Aggregate the data into a new dataframe to include only one row per strata of interest
 
-```{r flu - aggregate data, new df with one row per strata of interest -Nicole & Shirley}
+```{r flu - aggregate data by strata of interest - Nicole & Shirley}
 
-# Define the strata of interest
-strata_county <- "San Diego County"
-strata_age_category <- "18-49"
+# Group data by the county, age_category, and yr_epiweek & look at new & new severe cases only
+df_flu_clean_aggregate <- df_flu_CA_clean %>% group_by(age_category,county,yr_epiweek)%>%
+  summarise(sum_dx_new = sum(dx_new), sum_severe_new = sum(severe_new), dx_new_rate = sum(dx_new)/sum(susceptible), severe_new_rate = sum(severe_new)/sum(dx_new)) #sum dx_new and severe_new
+ 
 
-# Use the aggregate function to calculate the sum of dx_new for the specified strata
-aggregated_data <- aggregate(dx_new ~ county + age_category, data = df_flu_clean, FUN = sum)
-
-# Filter the aggregated data to include only the strata of interest
-strata_of_interest <- aggregated_data[aggregated_data$county == strata_county & aggregated_data$age_category == strata_age_category, ]
-
-
-strata_of_interest
+head(df_flu_clean_aggregate)
 
 ```
 
@@ -216,7 +195,7 @@ aggregated_data <- df_vax %>%
 
 # Update county_name to include "County" and Pivot the aggregated data
 df_ca_vax_clean <- aggregated_data %>%
-  mutate(county_name = paste0(county_name, " County")) %>%
+  mutate(county_name = paste0(county_name, "County")) %>%
   pivot_wider(
     names_from = demographic_category,
     values_from = demographic_value
@@ -226,6 +205,7 @@ df_ca_vax_clean <- aggregated_data %>%
 names(df_ca_vax_clean)[names(df_ca_vax_clean) == "Race/Ethnicity"] <- "race_eth"
 names(df_ca_vax_clean)[names(df_ca_vax_clean) == "Age Group"] <- "age_category"
 names(df_ca_vax_clean)[names(df_ca_vax_clean) == "Gender"] <- "sex"
+names(df_ca_vax_clean)[names(df_ca_vax_clean) == "county_name"] <- "county"
 
 # Recode race_eth and format as factor
 df_ca_vax_clean <- df_ca_vax_clean %>%
@@ -267,7 +247,7 @@ df_ca_vax_clean <- df_ca_vax_clean %>%
 df_ca_vax_clean <- df_ca_vax_clean %>%
   select(-quarter, -county_type)
 
-print(df_ca_vax_clean)
+str(df_ca_vax_clean)
 
 ```
 
@@ -278,8 +258,10 @@ print(df_ca_vax_clean)
 df_ca_vax_clean$dt_admin <- as.Date(df_ca_vax_clean$dt_admin, format = "%d/%m/%Y")
 
 # Subsetting the data for the years 2022 and 2023
-df_ca_vax_clean_clean <- df_ca_vax_clean %>%
-  filter(format(dt_admin, "%Y") %in% c("2022", "2023"))
+df_ca_vax_clean <- df_ca_vax_clean %>%
+  filter(format(dt_admin, "%Y") %in% c("2022", "2023")) %>%
+# Add column for yr_epiweek, calculated from dt_admin
+  mutate(yr_epiweek = paste(epiyear(dt_admin), epiweek(dt_admin), sep = "_"))
 
 print(df_ca_vax_clean)
 ```
@@ -304,7 +286,7 @@ df_ca_vax_clean_subset <- df_ca_vax_clean %>%
 
 # Summarize to include only one row per stratum of interest
 df_ca_vax_clean_subset <- df_ca_vax_clean_subset %>%
-  group_by(age) %>% 
+  group_by(age_category,county,yr_epiweek) %>% 
   summarize(
     mean_vaccination_rate = mean(vaccination_rate, na.rm = TRUE),
     .groups = "drop"
