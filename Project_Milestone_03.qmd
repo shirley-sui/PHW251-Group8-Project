@@ -133,13 +133,40 @@ df_flu_clean <- bind_rows(df_flu_CA_clean, df_flu_LA_clean)
 
 -   Select demographic and geographic strata (s) of interest
 
-```{r flu - select demo/geo strata of interest}
+```{r flu - select demo/geo strata of interest - Nicole & Shirley}
+
+# Group data by the county & age_category
+df_flu_clean_aggregate <- df_flu_CA_clean %>% group_by(age_category,county)%>%
+  summarise(sum_dx_new = sum(dx_new)) #sum dx_new
+
+max(df_flu_clean_aggregate$sum_dx_new) # Find highest IR in data  
+#highest IR is San Diego County: 18-49 age group for 606350 newly diagnosed individuals
+ 
+
+head(df_flu_clean_aggregate)
+
+# highest_incidence_rate <- df_flu_clean_aggregate %>%
+#   filter(county == "San Diego County" & age_category == "18-49")
 
 ```
 
 -   Aggregate the data into a new dataframe to include only one row per strata of interest
 
-```{r flu - aggregate data, new df with one row per strata of interest}
+```{r flu - aggregate data, new df with one row per strata of interest -Nicole & Shirley}
+
+
+# Define the strata of interest
+strata_county <- "San Diego County"
+strata_age_category <- "18-49"
+
+# Use the aggregate function to calculate the sum of dx_new for the specified strata
+aggregated_data <- aggregate(dx_new ~ county + age_category, data = df_flu_clean, FUN = sum)
+
+# Filter the aggregated data to include only the strata of interest
+strata_of_interest <- aggregated_data[aggregated_data$county == strata_county & aggregated_data$age_category == strata_age_category, ]
+
+
+strata_of_interest
 
 ```
 
