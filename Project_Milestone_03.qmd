@@ -154,7 +154,6 @@ head(df_flu_clean_aggregate)
 
 ```{r flu - aggregate data, new df with one row per strata of interest -Nicole & Shirley}
 
-
 # Define the strata of interest
 strata_county <- "San Diego County"
 strata_age_category <- "18-49"
