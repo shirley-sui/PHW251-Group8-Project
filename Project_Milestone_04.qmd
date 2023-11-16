@@ -12,7 +12,7 @@ Submit an Rmd or Qmd and publish an html file on RPubs with the following:
 ## Final datasets for creation of visualization 
 -   Join all datasets together 
 ```{Join all datasets together}
-1 + 1
+
 ```
 -   Calculate any remaining data elements needed for analysis 
 -   Show code used to create joined dataset, but please do not print full data frame output (showing data structure with str() is okay)
