@@ -10,6 +10,7 @@ editor: visual
 Submit an Rmd or Qmd and publish an html file on RPubs with the following:
 
 ## Final datasets for creation of visualization
+
 ```{r load libraries, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 60), tidy = TRUE)
@@ -25,6 +26,7 @@ library(dplyr)
 df_ca_vax_clean <- read_csv('./Milestone_3_Clean_Data/df_ca_vax_clean.csv')
 df_flu_clean <- read_csv('./Milestone_3_Clean_Data/df_flu_clean.csv')
 ```
+
 -   Join all datasets together
 
 ```{Join all datasets together}
@@ -34,9 +36,10 @@ df_flu_clean <- read_csv('./Milestone_3_Clean_Data/df_flu_clean.csv')
 -   Calculate any remaining data elements needed for analysis
 -   Show code used to create joined dataset, but please do not print full data frame output (showing data structure with str() is okay)
 
-## Visualizations (at least one per group member) 
--   One print quality table as requested in scenario 
--   One print quality plot or chart as requested in scenario 
+## Visualizations (at least one per group member)
+
+-   One print quality table as requested in scenario
+-   One print quality plot or chart as requested in scenario
 -   For groups of 3, one additional print quality table or plot of your choice (can support the requested data in the scenario, or answer a different question using the same data sources)
 
 ## For each visual, include - Code used to generate visual - Legend (if necessary) - 1-2 sentence interpretation

@@ -195,7 +195,7 @@ aggregated_data <- df_vax %>%
 
 # Update county_name to include "County" and Pivot the aggregated data
 df_ca_vax_clean <- aggregated_data %>%
-  mutate(county_name = paste0(county_name, "County")) %>%
+  mutate(county_name = paste0(county_name, " County")) %>%
   pivot_wider(
     names_from = demographic_category,
     values_from = demographic_value
@@ -247,7 +247,7 @@ df_ca_vax_clean <- df_ca_vax_clean %>%
 df_ca_vax_clean <- df_ca_vax_clean %>%
   select(-quarter, -county_type)
 
-str(df_ca_vax_clean)
+print(df_ca_vax_clean)
 
 ```
 
@@ -272,7 +272,7 @@ print(df_ca_vax_clean)
 ```{r vax - select demo/geo strata of interest}
 df_ca_vax_clean <- df_ca_vax_clean %>%
   filter(age_category != "NA")
-
+  
 head(df_ca_vax_clean)
 ```
 
@@ -293,6 +293,7 @@ df_ca_vax_clean_subset <- df_ca_vax_clean_subset %>%
   )
 
 head(df_ca_vax_clean_subset)
+write_csv(df_ca_vax_clean_subset, file = "df_ca_vax_clean_subset.csv")
 ```
 
 1)  Subset rows or columns, as needed

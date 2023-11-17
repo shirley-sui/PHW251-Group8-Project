@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ngan Nguyen, Nicole Fernandez, Shirley Sui">
+
+<title>Project_Milestone_03</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Project_Milestone_03_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Project_Milestone_03_files/libs/quarto-html/quarto.js"></script>
+<script src="Project_Milestone_03_files/libs/quarto-html/popper.min.js"></script>
+<script src="Project_Milestone_03_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Project_Milestone_03_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Project_Milestone_03_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Project_Milestone_03_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Project_Milestone_03_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Project_Milestone_03_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Project_Milestone_03_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Project_Milestone_03</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ngan Nguyen, Nicole Fernandez, Shirley Sui </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="project-milestone-3" class="level2">
+<h2 class="anchored" data-anchor-id="project-milestone-3">Project Milestone #3:</h2>
+</section>
+<section id="clean-each-dataset-and-include-descriptive-statistics-for-relevant-data-elements" class="level2">
+<h2 class="anchored" data-anchor-id="clean-each-dataset-and-include-descriptive-statistics-for-relevant-data-elements">Clean each dataset and include descriptive statistics for relevant data elements</h2>
+<ul>
+<li><p>The sim_flu_CA.csv file and sim_flu_LACounty.csv file together represent simulated morbidity for the entire state of California.</p></li>
+<li><p>While it’s certainly possible for data from different sources to adhere to a format standard, one of the challenges of working with secondary data is that it often does not work out that way.</p></li>
+<li><p>Therefore to prepare each dataset (milestone #3) so that they can be combined into one, whole state, dataset you will need to do the following:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data from project milestone #2 in Milestone_2_Clean_Data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df_vax <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'./Milestone_2_Clean_Data/ca_vax_rates_quarter_milestone_2.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 13533 Columns: 13
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (4): county_name, county_type, demographic_category, demographic_value
+dbl  (6): estimated_population, total_partial_vaccinated, cumulative_fully_v...
+lgl  (1): suppress_data
+date (2): dt_admin, quarter
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_flu_CA <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'./Milestone_2_Clean_Data/sim_flu_CA_milestone_2.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 114912 Columns: 15
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr   (3): county, age_category, sex
+dbl  (10): dx_new, recovered_new, susceptible, infected_current, infected_cu...
+date  (2): dt_report, dt_dx
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_flu_LA <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'./Milestone_2_Clean_Data/sim_flu_LACounty_milestone_2.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 2016 Columns: 14
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (4): age_category, sex, race_eth, dt_dx
+dbl (9): dx_new, recovered_new, susceptible, infected_current, infected_cumu...
+lgl (1): dt_report
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<section id="flu-morbidity-datasets-from-ca-and-la-county" class="level3">
+<h3 class="anchored" data-anchor-id="flu-morbidity-datasets-from-ca-and-la-county"><u>Flu morbidity datasets (from CA and LA County)</u></h3>
+<ul>
+<li><p>Recode column names, values, or formats that are in discordant (dates, etc)</p>
+<ul>
+<li><p>Reviewed all columns in the datasets resulting from last milestone’s initial data cleaning</p></li>
+<li><p>Potentially discordant columns identified via review of codebook:</p></li>
+<li><p>county (does not exist in LA data)</p>
+<ul>
+<li>needs to be added as a column in LA dataframe</li>
+</ul></li>
+<li><p>age_category</p>
+<ul>
+<li>both use the same categories</li>
+<li>needs to be set as factor in both dataframes (currently character)</li>
+</ul></li>
+<li><p>sex</p>
+<ul>
+<li>both use the same categories</li>
+<li>needs to be set as factor in both dataframes (currently character)</li>
+</ul></li>
+<li><p>race_eth</p>
+<ul>
+<li>in flu_CA - plain text and numbered, needs to be set as factor and recoded</li>
+<li>in flu_LA - plain text, needs to be set as factor</li>
+</ul></li>
+<li><p>dt_report</p>
+<ul>
+<li>correct format, but all NA values in flu_LA - can calculate using codebook definition</li>
+<li>calculate values in flu_LA - dt_report = last day of epi_week for dt_dx (dt_dx might need to be converted to date format before doing this calculation)</li>
+</ul></li>
+<li><p>dt_dx</p>
+<ul>
+<li>codebook recommends not to use this for flu_CA - can instead use dt_report</li>
+<li>remove from both dataframes after dt_report is calculated for flu_LA</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age_category &amp; sex - format as factor</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_flu_CA_clean <span class="ot">&lt;-</span> df_flu_CA <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_category =</span> <span class="fu">factor</span>(age_category, <span class="at">ordered =</span> <span class="fu">is.ordered</span>(age_category)), <span class="at">sex =</span> <span class="fu">factor</span>(sex, <span class="at">ordered =</span> <span class="fu">is.ordered</span>(sex))) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># recode race_eth and format as factor</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">race_eth =</span> <span class="fu">as.factor</span>(<span class="fu">case_when</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"White, Non-Hispanic"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Black, Non-Hispanic"</span>, </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">"American Indian or Alaska Native, Non-Hispanic"</span>, </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Asian, Non-Hispanic"</span>, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Native Hawaiian or Pacific Islander, Non-Hispanic"</span>, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Multiracial (two or more of above races), Non-Hispanic"</span>, </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Hispanic (any race)"</span>, </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="dv">9</span> <span class="sc">~</span> <span class="st">"Unknown"</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  ))) <span class="sc">%&gt;%</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column for quarter, calculated from dt_report</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">quarter =</span> <span class="fu">quarter</span>(dt_report, <span class="at">with_year =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA). Also remove dt_report, no longer needed.</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(dt_dx, dt_report))</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df_flu_CA_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [114,912 × 14] (S3: tbl_df/tbl/data.frame)
+ $ county              : chr [1:114912] "Alameda County" "Alameda County" "Alameda County" "Alameda County" ...
+ $ dx_new              : num [1:114912] 121 75 76 89 54 68 66 195 339 160 ...
+ $ recovered_new       : num [1:114912] 0 119 77 75 88 55 67 66 195 334 ...
+ $ susceptible         : num [1:114912] 46000 45925 45849 45760 45706 ...
+ $ infected_current    : num [1:114912] 121 77 76 90 56 69 68 197 341 167 ...
+ $ infected_cumulative : num [1:114912] 121 196 272 361 415 ...
+ $ recovered_cumulative: num [1:114912] 0 119 196 271 359 ...
+ $ severe_new          : num [1:114912] 0 0 0 0 0 1 0 1 0 0 ...
+ $ severe_cumulative   : num [1:114912] 0 0 0 0 0 1 1 2 2 2 ...
+ $ age_category        : Factor w/ 4 levels "0-17","18-49",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ sex                 : Factor w/ 2 levels "FEMALE","MALE": 1 1 1 1 1 1 1 1 1 1 ...
+ $ race_eth            : Factor w/ 7 levels "American Indian or Alaska Native, Non-Hispanic",..: 7 7 7 7 7 7 7 7 7 7 ...
+ $ population          : num [1:114912] 46000 46000 46000 46000 46000 46000 46000 46000 46000 46000 ...
+ $ quarter             : num [1:114912] 2022 2022 2022 2022 2022 ...</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assigning new data frame df_flu_LA_clean from existing dataframe df_flu_LA</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_flu_LA_clean <span class="ot">&lt;-</span> df_flu_LA</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add county column in position 1, with value being "Los Angeles County"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df_flu_LA_clean <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">county =</span> <span class="st">"Los Angeles County"</span>, df_flu_LA_clean)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_flu_LA_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              county dx_new recovered_new susceptible infected_current
+1 Los Angeles County    513             0      215280              513
+2 Los Angeles County    343           508      214937              348
+3 Los Angeles County    340           341      214597              347
+4 Los Angeles County    422           341      214175              428
+5 Los Angeles County    321           421      213854              328
+6 Los Angeles County    366           316      213488              378
+  infected_cumulative recovered_cumulative severe_new severe_cumulative
+1                 513                    0          0                 0
+2                 856                  508          0                 0
+3                1196                  849          0                 0
+4                1618                 1190          1                 1
+5                1939                 1611          1                 2
+6                2305                 1927          0                 2
+  age_category    sex            race_eth dt_report     dt_dx population
+1         0-17 FEMALE White, Non-Hispanic        NA 03OCT2022     215280
+2         0-17 FEMALE White, Non-Hispanic        NA 09OCT2022     215280
+3         0-17 FEMALE White, Non-Hispanic        NA 19OCT2022     215280
+4         0-17 FEMALE White, Non-Hispanic        NA 26OCT2022     215280
+5         0-17 FEMALE White, Non-Hispanic        NA 01NOV2022     215280
+6         0-17 FEMALE White, Non-Hispanic        NA 05NOV2022     215280</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age_category &amp; sex &amp; race_eth - format as factor</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_flu_LA_clean<span class="sc">$</span>age_category <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_flu_LA_clean<span class="sc">$</span>age_category)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df_flu_LA_clean<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_flu_LA_clean<span class="sc">$</span>sex)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df_flu_LA_clean<span class="sc">$</span>race_eth <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_flu_LA_clean<span class="sc">$</span>race_eth)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df_flu_LA_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   2016 obs. of  15 variables:
+ $ county              : chr  "Los Angeles County" "Los Angeles County" "Los Angeles County" "Los Angeles County" ...
+ $ dx_new              : num  513 343 340 422 321 ...
+ $ recovered_new       : num  0 508 341 341 421 ...
+ $ susceptible         : num  215280 214937 214597 214175 213854 ...
+ $ infected_current    : num  513 348 347 428 328 ...
+ $ infected_cumulative : num  513 856 1196 1618 1939 ...
+ $ recovered_cumulative: num  0 508 849 1190 1611 ...
+ $ severe_new          : num  0 0 0 1 1 0 1 0 1 1 ...
+ $ severe_cumulative   : num  0 0 0 1 2 2 3 3 4 5 ...
+ $ age_category        : Factor w/ 4 levels "0-17","18-49",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ sex                 : Factor w/ 2 levels "FEMALE","MALE": 1 1 1 1 1 1 1 1 1 1 ...
+ $ race_eth            : Factor w/ 7 levels "American Indian or Alaska Native, Non-Hispanic",..: 7 7 7 7 7 7 7 7 7 7 ...
+ $ dt_report           : logi  NA NA NA NA NA NA ...
+ $ dt_dx               : chr  "03OCT2022" "09OCT2022" "19OCT2022" "26OCT2022" ...
+ $ population          : num  215280 215280 215280 215280 215280 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create yr_epiweek, calculated from dt_dx</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) convert dt_dx to date format</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>df_flu_LA_clean<span class="sc">$</span>dt_dx <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df_flu_LA_clean<span class="sc">$</span>dt_dx, <span class="at">format =</span> <span class="st">"%d%b%Y"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) add quarter column to dataframe</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>df_flu_LA_clean<span class="sc">$</span>quarter <span class="ot">&lt;-</span> <span class="fu">quarter</span>(df_flu_LA_clean<span class="sc">$</span>dt_dx, <span class="at">with_year =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># remove dt_dx from dataframe (not recommended for use for data analysis per codebook for flu_CA). Also remove dt_report</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>df_flu_LA_clean <span class="ot">&lt;-</span> df_flu_LA_clean <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(dt_dx,dt_report))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Combine morbidity datasets into a single dataset</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># row bind dataframes for flu simulation together</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_flu_clean <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df_flu_CA_clean, df_flu_LA_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Select demographic and geographic strata (s) of interest</p>
+<ul>
+<li>We’re deciding to choose age_category, county, and yr_epiweek as our strata of interest, looking at new diagnoses only</li>
+</ul></li>
+<li><p>Aggregate the data into a new dataframe to include only one row per strata of interest</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group data by the county, age_category, and yr_epiweek &amp; look at new &amp; new severe cases only</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_flu_clean_aggregate <span class="ot">&lt;-</span> df_flu_CA_clean <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(age_category,county,quarter)<span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sum_dx_new =</span> <span class="fu">sum</span>(dx_new), <span class="at">sum_severe_new =</span> <span class="fu">sum</span>(severe_new), <span class="at">dx_new_rate =</span> <span class="fu">sum</span>(dx_new)<span class="sc">/</span><span class="fu">sum</span>(susceptible), <span class="at">severe_new_rate =</span> <span class="fu">sum</span>(severe_new)<span class="sc">/</span><span class="fu">sum</span>(dx_new)) <span class="co">#sum dx_new and severe_new</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'age_category', 'county'. You can override
+using the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_flu_clean_aggregate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+# Groups:   age_category, county [2]
+  age_category county         quarter sum_dx_new sum_severe_new dx_new_rate
+  &lt;fct&gt;        &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;
+1 0-17         Alameda County   2022.      21293             16     0.00493
+2 0-17         Alameda County   2023.     110350             98     0.0355 
+3 0-17         Alameda County   2023.      14348             26     0.00671
+4 0-17         Alpine County    2022.         14              0     0.00699
+5 0-17         Alpine County    2023.         59              0     0.0448 
+6 0-17         Alpine County    2023.          5              0     0.00557
+# ℹ 1 more variable: severe_new_rate &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="vaccination-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="vaccination-dataset"><u>Vaccination dataset</u></h3>
+<ul>
+<li>Recode values to be consistent with morbidity datasets so they can be joined. Reviewed all columns in the datasets resulting from last milestone’s initial data cleaning
+<ul>
+<li>Aggregate data to manage duplication</li>
+<li>county_name
+<ul>
+<li>Only has the name of the county, unlike flu_CA country names which has the word “County” included with the country name</li>
+</ul></li>
+<li>county_type
+<ul>
+<li>Not necessarily needed to be the same as the other two dataset, currently character</li>
+<li>Remove county type from data frame as there is only one value “MIXED”</li>
+</ul></li>
+<li>demographic_category
+<ul>
+<li>There are three categories within this column: Age group, Gender, and Race/Ethnicity</li>
+<li>Pivot_wide to split the column into three columns</li>
+<li>Rename the column Age group to age_category, Gender to sex, and Race/Ethnicity to race_eth to match with the other two data frames</li>
+</ul></li>
+<li>demographic_value
+<ul>
+<li>The value is based on the demographic categories:
+<ul>
+<li>age_catgory: Under 5, 5 -11, 12 - 17, 18-49, 50-64, 65+</li>
+<li>sex: Male, Female, Unknown/unidentified</li>
+<li>race_eth: American Indian or Alaska Native, Asian, Black or African American, Latino, Multiracial, Native Hawaiian or Other Pacific Islander, Other Race, Unknown, White</li>
+</ul></li>
+<li>Recode and reclassify the three columns to match with the other two data frames</li>
+<li>Will choose “age_category” as a point of strata</li>
+</ul></li>
+<li>estimated_population</li>
+<li>dt_admin
+<ul>
+<li>Subset the data frame to to 2022 and 2023</li>
+</ul></li>
+<li>total_partial_vaccinated</li>
+<li>cumulative_fully_vaccinated</li>
+<li>cumulative_at_least_one_dose</li>
+<li>cumulative_unvaccinated</li>
+<li>suppress_data</li>
+<li>cumulative_up_to_date_vax</li>
+<li>quarter
+<ul>
+<li>Remove quarter from data frame</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregating data to manage duplicates before pivoting</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>aggregated_data <span class="ot">&lt;-</span> df_vax <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county_name, county_type, estimated_population, dt_admin,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>           total_partial_vaccinated, cumulative_fully_vaccinated, </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>           cumulative_at_least_one_dose,cumulative_unvaccinated, suppress_data, </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>           cumulative_up_to_date_vax, quarter, demographic_category </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), sum),  </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">across</span>(<span class="fu">where</span>(is.character), toString),  </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Update county_name to include "County" and Pivot the aggregated data</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean <span class="ot">&lt;-</span> aggregated_data <span class="sc">%&gt;%</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">county_name =</span> <span class="fu">paste0</span>(county_name, <span class="st">"County"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> demographic_category,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> demographic_value</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename the "Race/Ethnicity" column, the "Age Group" column, and the "Gender" column</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_ca_vax_clean)[<span class="fu">names</span>(df_ca_vax_clean) <span class="sc">==</span> <span class="st">"Race/Ethnicity"</span>] <span class="ot">&lt;-</span> <span class="st">"race_eth"</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_ca_vax_clean)[<span class="fu">names</span>(df_ca_vax_clean) <span class="sc">==</span> <span class="st">"Age Group"</span>] <span class="ot">&lt;-</span> <span class="st">"age_category"</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_ca_vax_clean)[<span class="fu">names</span>(df_ca_vax_clean) <span class="sc">==</span> <span class="st">"Gender"</span>] <span class="ot">&lt;-</span> <span class="st">"sex"</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_ca_vax_clean)[<span class="fu">names</span>(df_ca_vax_clean) <span class="sc">==</span> <span class="st">"county_name"</span>] <span class="ot">&lt;-</span> <span class="st">"county"</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode race_eth and format as factor</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean <span class="ot">&lt;-</span> df_ca_vax_clean <span class="sc">%&gt;%</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">race_eth =</span> <span class="fu">as.factor</span>(<span class="fu">case_when</span>(</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="st">"White"</span> <span class="sc">~</span> <span class="st">"White, Non-Hispanic"</span>,</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="st">"Black or African American"</span> <span class="sc">~</span> <span class="st">"Black, Non-Hispanic"</span>, </span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="st">"American Indian or Alaska Native"</span> <span class="sc">~</span> <span class="st">"American Indian or Alaska Native, Non-Hispanic"</span>, </span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="st">"Asian"</span> <span class="sc">~</span> <span class="st">"Asian, Non-Hispanic"</span>, </span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="st">"Native Hawaiian or Other Pacific Islander"</span> <span class="sc">~</span> <span class="st">"Native Hawaiian or Pacific Islander, Non-Hispanic"</span>, </span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="st">"Multiracial"</span> <span class="sc">~</span> <span class="st">"Multiracial (two or more of above races), Non-Hispanic"</span>, </span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="st">"Latino"</span> <span class="sc">~</span> <span class="st">"Hispanic (any race)"</span>, </span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="st">"Other Race"</span> <span class="sc">~</span> <span class="st">"Other Race, Non-Hispanic"</span>, </span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    race_eth <span class="sc">==</span> <span class="st">"Unknown"</span> <span class="sc">~</span> <span class="st">"Unknown"</span>,  <span class="co"># Add a comma here</span></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(race_eth) <span class="sc">~</span> <span class="st">"NA"</span>,</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">as.character</span>(race_eth)  <span class="co"># Keep other values unchanged</span></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>  )))</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Reclassify age_category to match with sim_flu_CA and sim_flu_LACounty</span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean <span class="ot">&lt;-</span> df_ca_vax_clean <span class="sc">%&gt;%</span></span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_category =</span> <span class="fu">case_when</span>(</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>    age_category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Under 5"</span>, <span class="st">"12-17"</span>, <span class="st">"5-11"</span>) <span class="sc">~</span> <span class="st">"0-17"</span>,</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>    age_category <span class="sc">==</span> <span class="st">"18-49"</span> <span class="sc">~</span> <span class="st">"18-49"</span>,</span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>    age_category <span class="sc">==</span> <span class="st">"50-64"</span> <span class="sc">~</span> <span class="st">"50-64"</span>,</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>    age_category <span class="sc">==</span> <span class="st">"65+"</span> <span class="sc">~</span> <span class="st">"65+"</span>,</span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(age_category) <span class="sc">~</span> <span class="st">"NA"</span>,</span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">as.character</span>(age_category)</span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode sex to match with sim_flu_CA and sim_flu_LACounty</span></span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean <span class="ot">&lt;-</span> df_ca_vax_clean <span class="sc">%&gt;%</span></span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">case_when</span>(</span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a>    sex <span class="sc">==</span> <span class="st">"Male"</span> <span class="sc">~</span> <span class="st">"MALE"</span>,</span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>    sex <span class="sc">==</span> <span class="st">"Female"</span> <span class="sc">~</span> <span class="st">"FEMALE"</span>,</span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>    sex <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Unknown/unidentified"</span>) <span class="sc">~</span> <span class="st">"NA"</span>,</span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">as.character</span>(sex)</span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove "county_type" and "quarter" columns</span></span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean <span class="ot">&lt;-</span> df_ca_vax_clean <span class="sc">%&gt;%</span></span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>quarter, <span class="sc">-</span>county_type)</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df_ca_vax_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [13,474 × 12] (S3: tbl_df/tbl/data.frame)
+ $ county                      : chr [1:13474] "AlamedaCounty" "AlamedaCounty" "AlamedaCounty" "AlamedaCounty" ...
+ $ estimated_population        : num [1:13474] 4113 4113 4113 4113 4113 ...
+ $ dt_admin                    : Date[1:13474], format: "2020-09-30" "2020-12-31" ...
+ $ total_partial_vaccinated    : num [1:13474] 0 50 414 263 259 403 389 400 436 503 ...
+ $ cumulative_fully_vaccinated : num [1:13474] 1 1 936 2531 2892 ...
+ $ cumulative_at_least_one_dose: num [1:13474] 1 51 1350 2795 3152 ...
+ $ cumulative_unvaccinated     : num [1:13474] 4112 4062 2763 1318 961 ...
+ $ suppress_data               : logi [1:13474] FALSE FALSE FALSE FALSE FALSE FALSE ...
+ $ cumulative_up_to_date_vax   : num [1:13474] 0 0 0 0 0 0 0 0 160 895 ...
+ $ race_eth                    : Factor w/ 13 levels "American Indian or Alaska Native, Asian",..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ age_category                : chr [1:13474] "NA" "NA" "NA" "NA" ...
+ $ sex                         : chr [1:13474] NA NA NA NA ...</code></pre>
+</div>
+</div>
+<ul>
+<li>Select vaccination time frame that fits best with morbidity data and subset appropriately</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert dt_admin to Date format</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean<span class="sc">$</span>dt_admin <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df_ca_vax_clean<span class="sc">$</span>dt_admin, <span class="at">format =</span> <span class="st">"%d/%m/%Y"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting the data for the years 2022 and 2023</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean <span class="ot">&lt;-</span> df_ca_vax_clean <span class="sc">%&gt;%</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">format</span>(dt_admin, <span class="st">"%Y"</span>) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"2022"</span>, <span class="st">"2023"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column for yr_epiweek, calculated from dt_admin</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">quarter =</span> <span class="fu">quarter</span>(dt_admin, <span class="at">with_year =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df_ca_vax_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7,280 × 13
+   county        estimated_population dt_admin   total_partial_vaccinated
+   &lt;chr&gt;                        &lt;dbl&gt; &lt;date&gt;                        &lt;dbl&gt;
+ 1 AlamedaCounty                 4113 2022-03-31                      389
+ 2 AlamedaCounty                 4113 2022-06-30                      400
+ 3 AlamedaCounty                 4113 2022-09-30                      436
+ 4 AlamedaCounty                 4113 2022-12-31                      503
+ 5 AlamedaCounty                 4113 2023-03-31                      515
+ 6 AlamedaCounty                 4113 2023-06-30                      523
+ 7 AlamedaCounty                 4113 2023-08-26                      526
+ 8 AlamedaCounty                13184 2022-03-31                      699
+ 9 AlamedaCounty                13184 2022-06-30                      754
+10 AlamedaCounty                13184 2022-09-30                      842
+# ℹ 7,270 more rows
+# ℹ 9 more variables: cumulative_fully_vaccinated &lt;dbl&gt;,
+#   cumulative_at_least_one_dose &lt;dbl&gt;, cumulative_unvaccinated &lt;dbl&gt;,
+#   suppress_data &lt;lgl&gt;, cumulative_up_to_date_vax &lt;dbl&gt;, race_eth &lt;fct&gt;,
+#   age_category &lt;chr&gt;, sex &lt;chr&gt;, quarter &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Select demographic strata(s) of interest
+<ul>
+<li>We choose “age_category” as the demographic data of interest</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean <span class="ot">&lt;-</span> df_ca_vax_clean <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age_category <span class="sc">!=</span> <span class="st">"NA"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_ca_vax_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 13
+  county        estimated_population dt_admin   total_partial_vaccinated
+  &lt;chr&gt;                        &lt;dbl&gt; &lt;date&gt;                        &lt;dbl&gt;
+1 AlamedaCounty                87941 2022-03-31                       63
+2 AlamedaCounty                87941 2022-06-30                     6112
+3 AlamedaCounty                87941 2022-09-30                    10401
+4 AlamedaCounty                87941 2022-12-31                     9372
+5 AlamedaCounty                87941 2023-03-31                     9035
+6 AlamedaCounty                87941 2023-06-30                     9597
+# ℹ 9 more variables: cumulative_fully_vaccinated &lt;dbl&gt;,
+#   cumulative_at_least_one_dose &lt;dbl&gt;, cumulative_unvaccinated &lt;dbl&gt;,
+#   suppress_data &lt;lgl&gt;, cumulative_up_to_date_vax &lt;dbl&gt;, race_eth &lt;fct&gt;,
+#   age_category &lt;chr&gt;, sex &lt;chr&gt;, quarter &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Create a vaccination rate metric and summarize to include only one row per strata of interest</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fully vaccination rate</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean_subset <span class="ot">&lt;-</span> df_ca_vax_clean <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vaccination_rate =</span> cumulative_fully_vaccinated <span class="sc">/</span> estimated_population)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize to include only one row per stratum of interest</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>df_ca_vax_clean_subset <span class="ot">&lt;-</span> df_ca_vax_clean_subset <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(age_category,county,quarter) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_vaccination_rate =</span> <span class="fu">mean</span>(vaccination_rate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_ca_vax_clean_subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  age_category county        quarter mean_vaccination_rate
+  &lt;chr&gt;        &lt;chr&gt;           &lt;dbl&gt;                 &lt;dbl&gt;
+1 0-17         AlamedaCounty   2022.                 0.476
+2 0-17         AlamedaCounty   2022.                 0.491
+3 0-17         AlamedaCounty   2022.                 0.550
+4 0-17         AlamedaCounty   2022.                 0.578
+5 0-17         AlamedaCounty   2023.                 0.592
+6 0-17         AlamedaCounty   2023.                 0.596</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><p>Subset rows or columns, as needed</p></li>
+<li><p>Create new variables needed for analysis (minimum 2)</p>
+<p>New variables should be created based on existing columns;</p>
+<p>for example</p>
+<ul>
+<li><p>Calculating a rate</p></li>
+<li><p>Combining character strings</p></li>
+<li><p>Aggregation</p></li>
+</ul></li>
+<li><p>Clean variables needed for analysis (minimum 2)</p>
+<p>Examples</p>
+<ul>
+<li><p>Recode invalid values</p></li>
+<li><p>Handle missing data</p></li>
+<li><p>Recode categories</p></li>
+</ul></li>
+<li><p>Data re-structured as needed (aggregated/summarized and/or pivoted)</p></li>
+<li><p>Data dictionary based on clean dataset (minimum 4 data elements), including:</p>
+<ul>
+<li>Variable name</li>
+<li>Data type</li>
+<li>Description</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>data_dictionary <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Variable"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"quarter"</span>,<span class="st">"mean_vaccination_rate"</span>,<span class="st">"dx_new_rate"</span>,<span class="st">"severe_new_rate"</span>),</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Data Type"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"numeric"</span>,<span class="st">"numeric"</span>,<span class="st">"numeric"</span>,<span class="st">"numeric"</span>),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Description"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Quarter in which flu case was reported (or, for vaccination data, when vaccinations were completed), in the format of year.quarter"</span>,<span class="st">"Cumulative fully vaccinated (cumulative_fully_vaccinated) divided by total estimated population (estimated_population)"</span>,<span class="st">"New flu cases (dx_new) divided by population at risk (susceptible)"</span>,<span class="st">"New severe flu cases (severe_new) divided by new flu cases (dx_new)"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(data_dictionary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  Variable              `Data Type` Description                                 
+  &lt;chr&gt;                 &lt;chr&gt;       &lt;chr&gt;                                       
+1 quarter               numeric     Quarter in which flu case was reported (or,…
+2 mean_vaccination_rate numeric     Cumulative fully vaccinated (cumulative_ful…
+3 dx_new_rate           numeric     New flu cases (dx_new) divided by populatio…
+4 severe_new_rate       numeric     New severe flu cases (severe_new) divided b…</code></pre>
+</div>
+</div></li>
+<li><p>One or more tables with descriptive statistics for 4 data elements</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>flu_quarter <span class="ot">&lt;-</span> <span class="fu">unique</span>(df_flu_clean_aggregate<span class="sc">$</span>quarter)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>ca_vax_quarter <span class="ot">&lt;-</span> <span class="fu">unique</span>(df_ca_vax_clean<span class="sc">$</span>quarter)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>vax_rate_mean_sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(df_ca_vax_clean_subset<span class="sc">$</span>mean_vaccination_rate)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>dx_new_rate_sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(df_flu_clean_aggregate<span class="sc">$</span>dx_new_rate)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>severe_new_rate_sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(df_flu_clean_aggregate<span class="sc">$</span>severe_new_rate)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(padr)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>max_length <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">length</span>(flu_quarter), <span class="fu">length</span>(ca_vax_quarter))</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>flu_quarter_adjusted <span class="ot">&lt;-</span> <span class="fu">c</span>(flu_quarter, <span class="fu">rep</span>(<span class="cn">NA</span>, max_length <span class="sc">-</span> <span class="fu">length</span>(flu_quarter)))</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>ca_vax_quarter_adjusted <span class="ot">&lt;-</span> <span class="fu">c</span>(ca_vax_quarter, <span class="fu">rep</span>(<span class="cn">NA</span>, max_length <span class="sc">-</span> <span class="fu">length</span>(ca_vax_quarter)))</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>summary_quarters_vax <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">flu_quarter =</span> flu_quarter_adjusted,</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">ca_vax_quarter =</span> ca_vax_quarter_adjusted,</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">vax_rate_mean_sum =</span> vax_rate_mean_sum,</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">dx_new_rate_sum =</span> dx_new_rate_sum,</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">severe_new_rate_sum =</span> severe_new_rate_sum</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>summary_quarters_vax</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 3
+  flu_quarter ca_vax_quarter vax_rate_mean_sum
+        &lt;dbl&gt;          &lt;dbl&gt; &lt;table&gt;          
+1       2022.          2022.  0.1292755       
+2       2023.          2022.  0.4563418       
+3       2023.          2022.  0.7121838       
+4         NA           2022.  0.6489734       
+5         NA           2023.  0.8327675       
+6         NA           2023.  1.1377110       
+7         NA           2023. 14.0000000       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>summary_stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  dx_new_rate_sum severe_new_rate_sum
+  &lt;table&gt;         &lt;table&gt;            
+1 0.003569929     0.000000000        
+2 0.004956130     0.002725706        
+3 0.006698712     0.015174552        
+4 0.015767407     0.037938643        
+5 0.035501613     0.049883609        
+6 0.044798785     0.428571429        </code></pre>
+</div>
+</div></li>
+<li><p>Html output that is professionally prepared for presentation</p>
+<ul>
+<li><p>Only the necessary information is outputted (you should suppress, for example, entire data frame outputs)</p></li>
+<li><p>Use of headers and sub headers to create an organized document</p></li>
+</ul></li>
+</ol>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
