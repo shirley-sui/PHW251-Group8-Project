@@ -17,8 +17,6 @@ knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 60), tidy = TRUE)
 
 # Load tidyverse for all data cleaning packages
 library(tidyverse)
-library(lubridate)
-library(dplyr)
 ```
 
 ```{r load dataset}
