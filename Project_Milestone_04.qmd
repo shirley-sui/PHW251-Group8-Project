@@ -21,8 +21,8 @@ library(tidyverse)
 
 ```{r load dataset}
 #Load data from project Milestone #3 in Milestone_3_Clean_Data
-df_ca_vax_clean <- read_csv('./Milestone_3_Clean_Data/df_ca_vax_clean.csv')
-df_flu_clean <- read_csv('./Milestone_3_Clean_Data/df_flu_clean.csv')
+df_ca_vax_clean <- read_csv('./Milestone_3_Clean_Data/df_ca_vax_clean_subset.csv')
+df_flu_clean <- read_csv('./Milestone_3_Clean_Data/df_flu_clean_aggregate.csv')
 ```
 
 -   Join all datasets together
