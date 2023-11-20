@@ -57,14 +57,6 @@ str(df_joined)
 -   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity. --- data table? 2x2 (low/high vax vs low/high flu) [Kim]
 -   age group vax vs flu severity [Nicole]
 =======
-#### Research Question9(s)
-
-```         
--   Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations --- face wrap by county, line plot (one vax one new flu cases) [Shirley]
--   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity. --- data table? 2x2 (low/high vax vs low/high flu) [Kim]
--   age group vax vs flu severity [Nicole]
-```
-
 ```{r age group vax vs flu severity -Nicole}
 # Visualization: One print quality plot or chart as requested in scenario
 # Using Both a table & a chart seem appropriate for this specific research question
