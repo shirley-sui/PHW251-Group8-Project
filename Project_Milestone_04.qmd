@@ -17,6 +17,7 @@ knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 60), tidy = TRUE)
 
 # Load tidyverse for all data cleaning packages
 library(tidyverse)
+library(kableExtra)
 ```
 
 ```{r load dataset}
@@ -44,7 +45,6 @@ df_joined <- inner_join(df_flu, df_vax, by = join_by(age_category, county, quart
 # show data structure
 str(df_joined)
 ```
-
 ## Visualizations (at least one per group member)
 
 -   One print quality table as requested in scenario
@@ -90,11 +90,46 @@ ggplotly(vax_flu_byqtr) %>%
 ```
 
 -   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity. --- data table? 2x2 (low/high vax vs low/high flu) [Kim]
-``` {r correlation between COVID vax and flu rates and/or severity}
+``` {r Correlation table indicating relationship between COVID vaccination rates on severe flu rate - Kim}
 
+summary(df_joined)
+
+# Create categories based on COVID vaccination rates and severe flu rates
+data <- df_joined %>%
+  mutate(
+    COVID_Vaccination_Rate = ifelse(mean_vaccination_rate <= median(mean_vaccination_rate), "Low Vaccination Rate (Min = 0.14)", "High Vaccination Rate (Max = 1.14)"),
+    Severe_Flu_Rate = ifelse(severe_new_rate <= median(severe_new_rate), "Low Severe Flu Rate (Min = 0.00)", "High Severe Flu Rate (Max = 0.43)")
+  )
+
+# Calculate the correlation for each combination
+correlation_table <- data %>%
+  group_by(COVID_Vaccination_Rate, Severe_Flu_Rate) %>%
+  summarise(
+    Correlation = round(cor(mean_vaccination_rate, severe_new_rate), 2)
+  )
+
+# Rename columns
+colnames(correlation_table) <- c("COVID Vaccination Rate", "Severe Flu Rate", "Correlation")
+
+# Print the correlation table with kableExtra
+correlation_table %>%
+  kable(
+    format = "html", 
+    caption = "Correlation between COVID vaccination rates and severity of flu rate, 2022-2023", align = "c"
+  ) %>% 
+  kable_styling(
+    full_width = FALSE,
+    position = "center",
+    bootstrap_options = c("striped", "hover"),
+    latex_options = "striped"
+  ) %>%
+
+  # Print the result
+print(correlation_table)
 ```
 
 -   age group vax vs flu severity [Nicole]
+
 ```{r age group vax vs flu severity -Nicole}
 # Visualization: One print quality plot or chart as requested in scenario
 # Using Both a table & a chart seem appropriate for this specific research question
@@ -187,11 +222,18 @@ ggplot(data = age_group_vax_vs_flu_severity, aes(x = mean_vaccination_rate, y = 
 
 ```
 
+
 INTREPRETATION:
+
+=======
+-  Correlation table interpretation: Correlation values per each case provide insights into the relationships between COVID vaccination rates and severe flu cases rates in different scenarios, ranging from weak negative to moderate positive correlations. 
 
 ## For each visual, include - Code used to generate visual - Legend (if necessary) - 1-2 sentence interpretation
 
 NOTE: Please make sure the visual can stand-alone, meaning it includes enough information in title, legend, and footnote so that a person who sees only the visualization could understand what is being presented. Please also make sure column names, axis labels, and any other labels are meaningful and not just the name of the variable (ex: "County" rather than "county_name")
+
+
+
 
 ## Html file that is professionally prepared for presentation and published to RPubs
 
