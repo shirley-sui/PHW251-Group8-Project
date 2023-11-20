@@ -68,10 +68,10 @@ vax_flu_byqtr <- df_joined %>%
   geom_point() +
   geom_smooth(method = lm, color = "red") +
   theme_minimal() +
-  scale_y_continuous(labels= function(x) round(x*100, digits = 1)) + 
+  scale_y_continuous(labels= function(x) round(x*100, digits = 2)) + 
   labs(x = "Mean COVID Vaccination Rate 
   (fully vaccinated / population) ", y = "Mean Flu Rate 
-  (new diagnoses / 100 susceptible)", title = "COVID vaccination rate does not significantly reflect flu vaccination rate.", subtitle = "based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per 
+  (new diagnoses / 100 susceptible)", title = "COVID vaccination rate does not significantly reflect flu vaccination rate", subtitle = "based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per 
 quarter across 57 California counties, from Q4-2022 to Q2-2023") +
   facet_wrap(~quarter, scales = "free", labeller = labeller(quarter = qtr.labs)) + 
   theme(
@@ -83,9 +83,9 @@ quarter across 57 California counties, from Q4-2022 to Q2-2023") +
 
 ggplotly(vax_flu_byqtr) %>%
   layout(
-    title = list(text = paste0('COVID vaccination rate does not significantly reflect flu vaccination rate.', '<br>','<sup>','Across 57 California counties, from Q4-2022 to Q2-2023','</sup>'), yref = 'container', xref = 'paper', yref = 'paper'), 
-    annotations = list(text = paste0('<sup>','Based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per quarter','</sup>'), showarrow = F, xref = 'paper', yref = 'paper', xanchor = 'right', yanchor = 'auto', xshift = 350, yshift = -250),
-    margin = list(t = 120, b = 110, l = 100, r = 30)
+    title = list(text = paste0('COVID vaccination rate does not significantly reflect flu vaccination rate.','<br>','<sup>','Across 57 California counties, from Q4-2022 to Q2-2023','</sup>'), yref = 'container', xref = 'paper', yref = 'paper'), 
+    annotations = list(text = paste0('<sup>','Based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per quarter','</sup>'), showarrow = F, xref = 'paper', yref = 'paper', xanchor = 'right', yanchor = 'auto', xshift = 350, yshift = -230),
+    margin = list(t = 100, b = 110, l = 100, r = 30)
   )
 ```
 
