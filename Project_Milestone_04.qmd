@@ -89,7 +89,7 @@ ggplotly(vax_flu_byqtr) %>%
   )
 ```
 
--   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity. --- data table? 2x2 (low/high vax vs low/high flu) [Kim]
+-   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity.
 ``` {r Correlation table indicating relationship between COVID vaccination rates on severe flu rate - Kim}
 
 summary(df_joined)
@@ -128,8 +128,7 @@ correlation_table %>%
 print(correlation_table)
 ```
 
--   age group vax vs flu severity [Nicole]
-
+-   COVID vaccination versus flu severity by age group
 ```{r age group vax vs flu severity -Nicole}
 # Visualization: One print quality plot or chart as requested in scenario
 # Using Both a table & a chart seem appropriate for this specific research question
