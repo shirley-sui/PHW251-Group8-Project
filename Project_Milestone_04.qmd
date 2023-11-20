@@ -51,18 +51,113 @@ str(df_joined)
 -   One print quality plot or chart as requested in scenario
 -   For groups of 3, one additional print quality table or plot of your choice (can support the requested data in the scenario, or answer a different question using the same data sources)
 
+<<<<<<< HEAD
 #### Research Question(s)
 -   Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations --- face wrap by county, line plot (one vax one new flu cases) [Shirley]
 -   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity. --- data table? 2x2 (low/high vax vs low/high flu) [Kim]
 -   age group vax vs flu severity [Nicole]
+=======
+#### Research Question9(s)
 
-## For each visual, include - Code used to generate visual - Legend (if necessary) - 1-2 sentence interpretation
+```         
+-   Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations --- face wrap by county, line plot (one vax one new flu cases) [Shirley]
+-   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity. --- data table? 2x2 (low/high vax vs low/high flu) [Kim]
+-   age group vax vs flu severity [Nicole]
+```
 
-NOTE: Please make sure the visual can stand-alone, meaning it includes enough information in title, legend, and footnote so that a person who sees only the visualization could understand what is being presented. Please also make sure column names, axis labels, and any other labels are meaningful and not just the name of the variable (ex: "County" rather than "county_name")
+```{r age group vax vs flu severity -Nicole}
+# Visualization: One print quality plot or chart as requested in scenario
+# Using Both a table & a chart seem appropriate for this specific research question
 
-```{r create visualization}
+library(kableExtra)
+library(ggplot2)
 
-## Correlation table indicating relationship between COVID vaccination rates on severe flu rate - Kim
+
+# Rename joined df
+age_group_vax_vs_flu_severity <- df_joined
+
+# Rename df
+age_group_vax_vs_flu_severity_table <- age_group_vax_vs_flu_severity
+
+# Create a summary table
+summary_table <- age_group_vax_vs_flu_severity_table %>%
+  group_by(age_category) %>%
+  summarize(mean_vaccination_rate = mean(mean_vaccination_rate),
+            mean_flu_severity = mean(severe_new_rate))
+
+
+# Print the table using kableExtra (Quality table #1)
+kable(summary_table, "html") %>%
+  kable_styling(full_width = FALSE)
+
+
+
+
+
+# Scatter Plot (Quality plot #1)
+
+# Create a scatter plot
+age_group_vax_vs_flu_severity_plot <- ggplot(age_group_vax_vs_flu_severity_table, aes(x = mean_vaccination_rate, y = severe_new_rate, color = age_category)) +
+  geom_point() +
+  labs(title = "Relationship between Age Group Vaccination Rate and Flu Severity",
+       x = "Mean Vaccination Rate",
+       y = "Flu Severity Rate",
+       color = "Age Category") +
+  theme_minimal()
+
+# Print the plot
+print(age_group_vax_vs_flu_severity_plot)
+
+
+
+
+
+# Scatter plot (Quality plot #2)
+
+ggplot(data = age_group_vax_vs_flu_severity, aes(x = age_category, y = severe_new_rate, color = mean_vaccination_rate)) +
+  geom_point(size = 3) +
+  labs(title = "Age Group Vaccination vs Flu Severity",
+       x = "Age Category",
+       y = "Flu Severity Rate",
+       color = "Mean Vaccination Rate") +
+  scale_color_gradient(low = "yellow", high = "red") +  
+  theme_minimal()  
+
+
+
+
+
+# Scatter plot with facets for each age category (GQuality plot #3)
+ggplot(data = age_group_vax_vs_flu_severity, aes(x = severe_new_rate, y = mean_vaccination_rate, color = mean_vaccination_rate)) +
+  geom_point(size = 3) +
+  labs(title = "Vaccination vs Flu Severity by Age Category",
+       x = "Flu Severity Rate",
+       y = "Mean Vaccination Rate",
+       color = "Mean Vaccination Rate") +
+  scale_color_gradient(low = "yellow", high = "red") +  
+  facet_wrap(~age_category, scales = "free") +  
+  theme_minimal()  
+
+
+
+
+
+# SWITCH X & Y axis  (Quality plot #4)
+
+# Scatter plot with facets for each age category, switching x and y axes
+ggplot(data = age_group_vax_vs_flu_severity, aes(x = mean_vaccination_rate, y = severe_new_rate, color = mean_vaccination_rate)) +
+  geom_point(size = 3) +
+  labs(title = "Vaccination vs Flu Severity by Age Category",
+       x = "Mean Vaccination Rate",
+       y = "Flu Severity Rate",
+       color = "Mean Vaccination Rate") +
+  scale_color_gradient(low = "yellow", high = "red") +  
+  facet_wrap(~age_category, scales = "free") +  
+  theme_minimal()  
+
+```
+
+```{Correlation table indicating relationship between COVID vaccination rates on severe flu rate - Kim}
 
 summary(df_joined)
 
@@ -98,9 +193,17 @@ correlation_table %>%
 
   # Print the result
 print(correlation_table)
-
-# Correlation table interpretation: Correlation values per each case provide insights into the relationships between COVID vaccination rates and severe flu cases rates in different scenarios, ranging from weak negative to moderate positive correlations. 
 ```
+INTREPRETATION:
+
+-  Correlation table interpretation: Correlation values per each case provide insights into the relationships between COVID vaccination rates and severe flu cases rates in different scenarios, ranging from weak negative to moderate positive correlations. 
+>>>>>>> be01a5dfed3fb9fdd13af164e66769301951de9b
+
+## For each visual, include - Code used to generate visual - Legend (if necessary) - 1-2 sentence interpretation
+
+NOTE: Please make sure the visual can stand-alone, meaning it includes enough information in title, legend, and footnote so that a person who sees only the visualization could understand what is being presented. Please also make sure column names, axis labels, and any other labels are meaningful and not just the name of the variable (ex: "County" rather than "county_name")
+
+
 
 
 ## Html file that is professionally prepared for presentation and published to RPubs
