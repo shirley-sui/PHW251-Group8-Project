@@ -51,14 +51,50 @@ str(df_joined)
 -   One print quality plot or chart as requested in scenario
 -   For groups of 3, one additional print quality table or plot of your choice (can support the requested data in the scenario, or answer a different question using the same data sources)
 
-#### Research Question9(s)
+#### Research Question(s)
+         
+-   Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations 
+``` {r covid vax vs flu rate - Shirley}
+# COVID vaccination rates vs flu rate (new cases), per quarter, color coded by county
+library(plotly)
+# Re-format facet labels for quarters
+qtr.labs <- c("Q4-2022", "Q1-2023", "Q2-2023")
+names(qtr.labs) <- c(2022.4, 2023.1, 2023.2)
 
-```         
--   Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations --- face wrap by county, line plot (one vax one new flu cases) [Shirley]
--   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity. --- data table? 2x2 (low/high vax vs low/high flu) [Kim]
--   age group vax vs flu severity [Nicole]
+vax_flu_byqtr <- df_joined %>%
+  group_by(county, quarter) %>%
+  mutate(mean_vaccination_rate = mean(mean_vaccination_rate), dx_new_rate = mean(dx_new_rate)) %>%
+  ggplot(aes(x = mean_vaccination_rate, y = dx_new_rate, color=county)) +
+  geom_point() +
+  geom_smooth(method = lm, color = "red") +
+  theme_minimal() +
+  scale_y_continuous(labels= function(x) round(x*100, digits = 1)) + 
+  labs(x = "Mean COVID Vaccination Rate 
+  (fully vaccinated / population) ", y = "Mean Flu Rate 
+  (new diagnoses / 100 susceptible)", title = "COVID vaccination rate does not significantly reflect flu vaccination rate.", subtitle = "based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per 
+quarter across 57 California counties, from Q4-2022 to Q2-2023") +
+  facet_wrap(~quarter, scales = "free", labeller = labeller(quarter = qtr.labs)) + 
+  theme(
+    legend.position = "none", 
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold"), 
+    plot.subtitle = element_text(face = "italic"), 
+    strip.text.x = element_text(face = "bold"))
+
+ggplotly(vax_flu_byqtr) %>%
+  layout(
+    title = list(text = paste0('COVID vaccination rate does not significantly reflect flu vaccination rate.', '<br>','<sup>','Across 57 California counties, from Q4-2022 to Q2-2023','</sup>'), yref = 'container', xref = 'paper', yref = 'paper'), 
+    annotations = list(text = paste0('<sup>','Based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per quarter','</sup>'), showarrow = F, xref = 'paper', yref = 'paper', xanchor = 'right', yanchor = 'auto', xshift = 350, yshift = -250),
+    margin = list(t = 120, b = 110, l = 100, r = 30)
+  )
 ```
 
+-   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity. --- data table? 2x2 (low/high vax vs low/high flu) [Kim]
+``` {r correlation between COVID vax and flu rates and/or severity}
+
+```
+
+-   age group vax vs flu severity [Nicole]
 ```{r age group vax vs flu severity -Nicole}
 # Visualization: One print quality plot or chart as requested in scenario
 # Using Both a table & a chart seem appropriate for this specific research question
@@ -152,8 +188,6 @@ ggplot(data = age_group_vax_vs_flu_severity, aes(x = mean_vaccination_rate, y = 
 ```
 
 INTREPRETATION:
-
-
 
 ## For each visual, include - Code used to generate visual - Legend (if necessary) - 1-2 sentence interpretation
 
