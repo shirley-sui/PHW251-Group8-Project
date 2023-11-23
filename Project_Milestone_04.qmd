@@ -18,9 +18,11 @@ knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 60), tidy = TRUE)
 # Load tidyverse for all data cleaning packages
 library(tidyverse)
 library(kableExtra)
+library(ggplot2)
+library(plotly)
 ```
 
-```{r load dataset}
+```{r load dataset, include = FALSE}
 #Load data from project Milestone #3 in Milestone_3_Clean_Data
 df_vax <- read_csv('./Milestone_3_Clean_Data/df_ca_vax_clean_subset.csv')
 df_flu <- read_csv('./Milestone_3_Clean_Data/df_flu_clean_aggregate.csv')
@@ -30,7 +32,7 @@ df_flu <- read_csv('./Milestone_3_Clean_Data/df_flu_clean_aggregate.csv')
 -   Calculate any remaining data elements needed for analysis
 -   Show code used to create joined dataset, but please do not print full data frame output (showing data structure with str() is okay)
 
-```{r Join all datasets together}
+```{r Join all datasets together, warning = FALSE, message = FALSE}
 # Flu data only has quarters 2022.4 to 2023.2
 # Vax data has quarters 2022.1 to 2023.3
 # Before joining, filter vax data to only 2022.4 to 2023.2
@@ -53,12 +55,13 @@ str(df_joined)
 -   For groups of 3, one additional print quality table or plot of your choice (can support the requested data in the scenario, or answer a different question using the same data sources)
 
 #### Research Question(s)
+###  CAUTION: It's crucial to recognize that this analysis pertains to aggregate-level data, and caution should be exercised in generalizing these findings to individual-level dynamics to avoid the ecological fallacy.
 
 -   Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations
 
-```{r covid vax vs flu rate - Shirley}
+```{r covid vax vs flu rate - Shirley, warning = FALSE, message = FALSE, echo = TRUE}
 # COVID vaccination rates vs flu rate (new cases), per quarter, color coded by county
-library(plotly)
+
 # Re-format facet labels for quarters
 qtr.labs <- c("Q4-2022", "Q1-2023", "Q2-2023")
 names(qtr.labs) <- c(2022.4, 2023.1, 2023.2)
@@ -71,9 +74,7 @@ vax_flu_byqtr <- df_joined %>%
   geom_smooth(method = lm, color = "red") +
   theme_minimal() +
   scale_y_continuous(labels= function(x) round(x*100, digits = 2)) + 
-  labs(x = "Mean COVID Vaccination Rate 
-  (fully vaccinated / population) ", y = "Mean Flu Rate 
-  (new diagnoses / 100 susceptible)", title = "COVID vaccination rate does not significantly reflect flu vaccination rate", subtitle = "based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per 
+  labs(x = "Mean COVID Vaccination Rate (fully vaccinated / population) ", y = "Mean Flu Rate (new diagnoses / 100 susceptible)", title = "COVID vaccination rate does not significantly reflect flu vaccination rate", subtitle = "based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per 
 quarter across 57 California counties, from Q4-2022 to Q2-2023") +
   facet_wrap(~quarter, scales = "free", labeller = labeller(quarter = qtr.labs)) + 
   theme(
@@ -90,10 +91,11 @@ ggplotly(vax_flu_byqtr) %>%
     margin = list(t = 100, b = 110, l = 100, r = 30)
   )
 ```
+COVID vaccination rate vs flu rate interpretation: Analysis of the COVID vaccination rate data and simulated flu data indicates that COVID vaccination does not seem to strongly reflect flu vaccination within the 57 California counties from which data was collected/simulated. Additional measures to promote flu vaccination may be needed.
 
 -   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity.
 
-```{r Correlation table indicating relationship between COVID vaccination rates on severe flu rate - Kim}
+```{r Correlation table indicating relationship between COVID vaccination rates on severe flu rate - Kim, warning = FALSE, message = FALSE, echo = TRUE}
 
 summary(df_joined)
 
@@ -112,35 +114,24 @@ correlation_table <- data %>%
   )
 
 # Rename columns
-colnames(correlation_table) <- c("COVID Vaccination Rate", "Severe Flu Rate", "Correlation")
+colnames(correlation_table) <- c("COVID Vaccination Rate", "Mean Severe Flu Rate", "Correlation")
 
 # Print the correlation table with kableExtra
-correlation_table %>%
   kable(
+    correlation_table,
     format = "html", 
-    caption = "Correlation between COVID vaccination rates and severity of flu rate, 2022-2023", align = "c"
-  ) %>% 
-  kable_styling(
-    full_width = FALSE,
-    position = "center",
-    bootstrap_options = c("striped", "hover"),
-    latex_options = "striped"
-  ) %>%
+    caption = "No clear correlation between COVID vaccination rates and mean severe flu rate, Q4-2022 - Q2-2023") %>% 
+  kable_styling(full_width = FALSE) 
 
-  # Print the result
-print(correlation_table)
+
 ```
+Correlation table interpretation: Correlation values per each case provide insights into the relationships between COVID vaccination rates and severe flu cases rates in different scenarios, ranging from weak negative to moderate positive correlations. There is a significant weak negative correlation between the high vaccination rate group and low severe flu rate which might be impacted by confounders. 
 
 -   COVID vaccination versus flu severity by age group
 
-```{r age group vax vs flu severity -Nicole}
+```{r age group vax vs flu severity -Nicole, warning = FALSE, message = FALSE, echo = TRUE}
 # Visualization: One print quality plot or chart as requested in scenario
 # Using Both a table & a chart seem appropriate for this specific research question
-
-library(kableExtra)
-library(ggplot2)
-
-
 # Rename joined df
 age_group_vax_vs_flu_severity <- df_joined
 
@@ -153,89 +144,35 @@ summary_table <- age_group_vax_vs_flu_severity_table %>%
   summarize(mean_vaccination_rate = mean(mean_vaccination_rate),
             mean_flu_severity = mean(severe_new_rate))
 
+# Rename summary table data
+colnames(summary_table ) <- c("Age Category", "Mean COVID Vaccination Rate", "Mean Severe Flu Rate")
 
 # Print the table using kableExtra (Quality table #1)
-kable(summary_table, "html") %>%
+kable(
+  summary_table, 
+  "html",
+  caption = "High COVID vaccination rate does not imply Low severe flu rate by Age Categories") %>%
   kable_styling(full_width = FALSE)
 
 
+# Quality plot
 
-
-
-# Scatter Plot (Quality plot #1)
-
-# Create a scatter plot
-age_group_vax_vs_flu_severity_plot <- ggplot(age_group_vax_vs_flu_severity_table, aes(x = mean_vaccination_rate, y = severe_new_rate, color = age_category)) +
-  geom_point() +
-  labs(title = "Relationship between Age Group Vaccination Rate and Flu Severity",
-       x = "Mean Vaccination Rate",
-       y = "Flu Severity Rate",
-       color = "Age Category") +
-  theme_minimal()
-
-# Print the plot
-print(age_group_vax_vs_flu_severity_plot)
-
-
-
-
-
-# Scatter plot (Quality plot #2)
-
-ggplot(data = age_group_vax_vs_flu_severity, aes(x = age_category, y = severe_new_rate, color = mean_vaccination_rate)) +
-  geom_point(size = 3) +
-  labs(title = "Age Group Vaccination vs Flu Severity",
-       x = "Age Category",
-       y = "Flu Severity Rate",
-       color = "Mean Vaccination Rate") +
-  scale_color_gradient(low = "yellow", high = "red") +  
-  theme_minimal()  
-
-
-
-
-
-# Scatter plot with facets for each age category (GQuality plot #3)
-ggplot(data = age_group_vax_vs_flu_severity, aes(x = severe_new_rate, y = mean_vaccination_rate, color = mean_vaccination_rate)) +
-  geom_point(size = 3) +
-  labs(title = "Vaccination vs Flu Severity by Age Category",
-       x = "Flu Severity Rate",
-       y = "Mean Vaccination Rate",
-       color = "Mean Vaccination Rate") +
-  scale_color_gradient(low = "yellow", high = "red") +  
-  facet_wrap(~age_category, scales = "free") +  
-  theme_minimal()  
-
-
-
-
-
-# SWITCH X & Y axis  (Quality plot #4)
-
-# Scatter plot with facets for each age category, switching x and y axes
+# Scatter plot with facets for each age category
 ggplot(data = age_group_vax_vs_flu_severity, aes(x = mean_vaccination_rate, y = severe_new_rate, color = mean_vaccination_rate)) +
   geom_point(size = 3) +
-  labs(title = "Vaccination vs Flu Severity by Age Category",
+  labs(title = "High COVID vaccination rate does not imply Low severe flu rate",
+       subtitle = "Scatter Plots by Age Categories",
        x = "Mean Vaccination Rate",
        y = "Flu Severity Rate",
        color = "Mean Vaccination Rate") +
-  scale_color_gradient(low = "yellow", high = "red") +  
+  geom_smooth(method = lm, color = "yellow") +
+  scale_color_gradient(low = "blue", high = "red") +  
   facet_wrap(~age_category, scales = "free") +  
   theme_minimal()  
 
 ```
 
-COVID vaccination versus flu severity by age group interpretation: 
-The data indicates an age-related uptrend in vaccination rates, particularly among older demographics. Intriguingly, despite heightened vaccination coverage in these age groups, there is a simultaneous upswing in average flu severity.
-
-However, it's crucial to recognize that this analysis pertains to aggregate-level data, and caution should be exercised in generalizing these findings to individual-level dynamics to avoid the ecological fallacy.
-
-
-
-
-
-
-======= - Correlation table interpretation: Correlation values per each case provide insights into the relationships between COVID vaccination rates and severe flu cases rates in different scenarios, ranging from weak negative to moderate positive correlations.
+COVID vaccination versus flu severity by age group interpretation: The data indicates an age-related uptrend in vaccination rates among the older demographics. Intriguingly, despite heightened vaccination coverage in these age groups, there is a simultaneous upswing in average flu severity.
 
 ## For each visual, include - Code used to generate visual - Legend (if necessary) - 1-2 sentence interpretation
 
@@ -247,4 +184,4 @@ NOTE: Please make sure the visual can stand-alone, meaning it includes enough in
 -   Code used to import and clean data (milestones 2 and 3) can be included in the rmd/qmd but please use the option include=FALSE in order to prevent the code and any output from. Code chunk would look like {r chunk_name, include=FALSE}
 -   Utilize warning=FALSE and message=FALSE to suppress any warnings/messages that may be displaying from any chunks
 -   For this milestone please make sure code for visualizations are included in the final file. - Show your work by "echoing" code used in Rmd/Qmd file to create your tables and graphs. \`\`\`{r, echo = TRUE} in code chunk preferences.
--   Use headers and sub headers to create an organized document \## Running Code
+-   Use headers and sub headers to create an organized document 
