@@ -56,9 +56,9 @@ str(df_joined)
 
 #### Research Question(s)
 
-### CAUTION: It's crucial to recognize that this analysis pertains to aggregate-level data, and caution should be exercised in generalizing these findings to individual-level dynamics to avoid the ecological fallacy.
+##### CAUTION: It's crucial to recognize that this analysis pertains to aggregate-level data, and caution should be exercised in generalizing these findings to individual-level dynamics to avoid the ecological fallacy.
 
--   Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations
+##### Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations
 
 ```{r covid vax vs flu rate - Shirley, warning = FALSE, message = FALSE, echo = TRUE}
 # COVID vaccination rates vs flu rate (new cases), per quarter, color coded by county
@@ -99,7 +99,7 @@ ggplotly(vax_flu_byqtr) %>%
 
 COVID vaccination rate vs flu rate interpretation: Analysis of the COVID vaccination rate data and simulated flu data indicates that COVID vaccination does not seem to strongly reflect flu vaccination within the 57 California counties from which data was collected/simulated. Additional measures to promote flu vaccination may be needed.
 
--   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity.
+##### Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity.
 
 ```{r Correlation table indicating relationship between COVID vaccination rates on severe flu rate - Kim, warning = FALSE, message = FALSE, echo = TRUE}
 
@@ -134,7 +134,7 @@ colnames(correlation_table) <- c("COVID Vaccination Rate", "Mean Severe Flu Rate
 
 Correlation table interpretation: Correlation values per each case provide insights into the relationships between COVID vaccination rates and severe flu cases rates in different scenarios, ranging from weak negative to moderate positive correlations. There is a significant weak negative correlation between the high vaccination rate group and low severe flu rate which might be impacted by confounders.
 
--   COVID vaccination versus flu severity by age group
+##### Does COVID vaccination affect flu severity within each age group?
 
 ```{r age group vax vs flu severity -Nicole, warning = FALSE, message = FALSE, echo = TRUE}
 # Visualization: One print quality plot or chart as requested in scenario
@@ -158,7 +158,7 @@ colnames(summary_table ) <- c("Age Category", "Mean COVID Vaccination Rate", "Me
 kable(
   summary_table, 
   "html",
-  caption = "High COVID vaccination rate does not imply Low severe flu rate by Age Categories") %>%
+  caption = "High COVID vaccination rate does not necessarily imply low severe flu rate") %>%
   kable_styling(full_width = FALSE)
 
 
@@ -167,7 +167,7 @@ kable(
 # Scatter plot with facets for each age category
 ggplot(data = age_group_vax_vs_flu_severity, aes(x = mean_vaccination_rate, y = severe_new_rate, color = mean_vaccination_rate)) +
   geom_point(size = 3) +
-  labs(title = "High COVID vaccination rate does not imply Low severe flu rate",
+  labs(title = "High COVID vaccination rate does not necessarily imply low severe flu rate",
        subtitle = "Scatter Plots by Age Categories",
        x = "Mean Vaccination Rate",
        y = "Flu Severity Rate",
