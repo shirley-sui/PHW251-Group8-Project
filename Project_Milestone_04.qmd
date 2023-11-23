@@ -55,7 +55,8 @@ str(df_joined)
 -   For groups of 3, one additional print quality table or plot of your choice (can support the requested data in the scenario, or answer a different question using the same data sources)
 
 #### Research Question(s)
-###  CAUTION: It's crucial to recognize that this analysis pertains to aggregate-level data, and caution should be exercised in generalizing these findings to individual-level dynamics to avoid the ecological fallacy.
+
+### CAUTION: It's crucial to recognize that this analysis pertains to aggregate-level data, and caution should be exercised in generalizing these findings to individual-level dynamics to avoid the ecological fallacy.
 
 -   Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations
 
@@ -74,7 +75,9 @@ vax_flu_byqtr <- df_joined %>%
   geom_smooth(method = lm, color = "red") +
   theme_minimal() +
   scale_y_continuous(labels= function(x) round(x*100, digits = 2)) + 
-  labs(x = "Mean COVID Vaccination Rate (fully vaccinated / population) ", y = "Mean Flu Rate (new diagnoses / 100 susceptible)", title = "COVID vaccination rate does not significantly reflect flu vaccination rate", subtitle = "based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per 
+  labs(x = "Mean COVID Vaccination Rate 
+  (fully vaccinated / population) ", y = "Mean Flu Rate 
+  (new diagnoses / 100 susceptible)", title = "COVID vaccination rate does not significantly reflect flu vaccination rate", subtitle = "based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per 
 quarter across 57 California counties, from Q4-2022 to Q2-2023") +
   facet_wrap(~quarter, scales = "free", labeller = labeller(quarter = qtr.labs)) + 
   theme(
@@ -82,7 +85,9 @@ quarter across 57 California counties, from Q4-2022 to Q2-2023") +
     plot.title.position = "plot",
     plot.title = element_text(face = "bold"), 
     plot.subtitle = element_text(face = "italic"), 
-    strip.text.x = element_text(face = "bold"))
+    strip.text.x = element_text(face = "bold"),
+    axis.title.y = element_text(margin = margin(r = 5)),
+    axis.title.x = element_text(margin = margin(t = 5)))
 
 ggplotly(vax_flu_byqtr) %>%
   layout(
@@ -91,6 +96,7 @@ ggplotly(vax_flu_byqtr) %>%
     margin = list(t = 100, b = 110, l = 100, r = 30)
   )
 ```
+
 COVID vaccination rate vs flu rate interpretation: Analysis of the COVID vaccination rate data and simulated flu data indicates that COVID vaccination does not seem to strongly reflect flu vaccination within the 57 California counties from which data was collected/simulated. Additional measures to promote flu vaccination may be needed.
 
 -   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity.
@@ -125,7 +131,8 @@ colnames(correlation_table) <- c("COVID Vaccination Rate", "Mean Severe Flu Rate
 
 
 ```
-Correlation table interpretation: Correlation values per each case provide insights into the relationships between COVID vaccination rates and severe flu cases rates in different scenarios, ranging from weak negative to moderate positive correlations. There is a significant weak negative correlation between the high vaccination rate group and low severe flu rate which might be impacted by confounders. 
+
+Correlation table interpretation: Correlation values per each case provide insights into the relationships between COVID vaccination rates and severe flu cases rates in different scenarios, ranging from weak negative to moderate positive correlations. There is a significant weak negative correlation between the high vaccination rate group and low severe flu rate which might be impacted by confounders.
 
 -   COVID vaccination versus flu severity by age group
 
@@ -184,4 +191,4 @@ NOTE: Please make sure the visual can stand-alone, meaning it includes enough in
 -   Code used to import and clean data (milestones 2 and 3) can be included in the rmd/qmd but please use the option include=FALSE in order to prevent the code and any output from. Code chunk would look like {r chunk_name, include=FALSE}
 -   Utilize warning=FALSE and message=FALSE to suppress any warnings/messages that may be displaying from any chunks
 -   For this milestone please make sure code for visualizations are included in the final file. - Show your work by "echoing" code used in Rmd/Qmd file to create your tables and graphs. \`\`\`{r, echo = TRUE} in code chunk preferences.
--   Use headers and sub headers to create an organized document 
+-   Use headers and sub headers to create an organized document
