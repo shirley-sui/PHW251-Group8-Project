@@ -180,3 +180,7 @@ ggplot(data = age_group_vax_vs_flu_severity, aes(x = mean_vaccination_rate, y = 
 ```
 
 COVID vaccination versus flu severity by age group interpretation: The data indicates an age-related uptrend in vaccination rates among the older demographics. Intriguingly, despite heightened vaccination coverage in these age groups, there is a simultaneous upswing in average flu severity.
+
+## RPubs Link
+
+https://rpubs.com/ssui/phw241_group8_milestone4
