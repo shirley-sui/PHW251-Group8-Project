@@ -1,0 +1,17 @@
+---
+title: "Project_Milestone_06"
+author: "Ngan Nguyen, Nicole Fernandez, Shirley Sui"
+format: html
+editor: visual
+---
+
+```{r load libraries, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 60), tidy = TRUE)
+
+# Load tidyverse for all data cleaning packages
+library(tidyverse)
+library(kableExtra)
+library(ggplot2)
+library(plotly)
+```
