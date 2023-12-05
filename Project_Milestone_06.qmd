@@ -1,5 +1,5 @@
 ---
-title: "Project_Milestone_06"
+title: "Final Project: Exploring the Relationship Between COVID Vaccination and Flu Rates in 57 California Counties, from Q4-2022 to Q2-2023"
 author: "Ngan Nguyen, Nicole Fernandez, Shirley Sui"
 format: html
 editor: visual
