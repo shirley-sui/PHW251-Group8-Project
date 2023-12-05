@@ -28,13 +28,18 @@ df_vax <- df_vax %>%
   filter(quarter >= 2022.4 & quarter <= 2023.2)
 
 # perform inner_join - we don't want any data that doesn't have a match in both datasets
+# also rename mean_vaccination_rate to pct_vaccinated
 
-df_joined <- inner_join(df_flu, df_vax, by = join_by(age_category, county, quarter)) %>% select(!c(sum_dx_new, sum_severe_new)) %>% drop_na()
+df_joined <- inner_join(df_flu, df_vax, by = join_by(age_category, county, quarter)) %>% select(!c(sum_dx_new, sum_severe_new)) %>% rename(pct_vaccinated = mean_vaccination_rate) %>% drop_na()
 ```
 
 ## [Problem Statement]{.underline}
 
-Background & research question(s)/null & alternative hypotheses here
+Background & research question(s)/null & alternative hypotheses here:
+
+-   Identify if COVID vaccination rates reflect flu vaccination rates in populations and or if more should be done to encourage flu vaccinations.
+-   Identify where there is any correlation between COVID vaccination rates on flu rates and/or severity.
+-   Does COVID vaccination affect flu severity within each age group?
 
 ## [Methods]{.underline}
 
@@ -46,7 +51,7 @@ Background & research question(s)/null & alternative hypotheses here
 
 
 ```{r covid vax vs flu rate - Shirley, warning = FALSE, message = FALSE, echo = FALSE}
-# COVID vaccination rates vs flu rate (new cases), per quarter, color coded by county
+# COVID vaccination vs flu rate (new cases), per quarter, color coded by county
 
 # Re-format facet labels for quarters
 qtr.labs <- c("Q4-2022", "Q1-2023", "Q2-2023")
@@ -54,16 +59,15 @@ names(qtr.labs) <- c(2022.4, 2023.1, 2023.2)
 
 vax_flu_byqtr <- df_joined %>%
   group_by(county, quarter) %>%
-  mutate(mean_vaccination_rate = mean(mean_vaccination_rate), dx_new_rate = mean(dx_new_rate)) %>%
-  ggplot(aes(x = mean_vaccination_rate, y = dx_new_rate, color=county)) +
+  mutate(mean_pct_vaccinated = mean(pct_vaccinated), dx_new_rate = mean(dx_new_rate)) %>%
+  ggplot(aes(x = pct_vaccinated, y = dx_new_rate, color=county, text = paste("<b>County: </b>", county, "<br><b>Mean % Vaccinated for COVID: </b>", round(pct_vaccinated, 3)*100,"%", "<br><b>Mean Flu Rate: </b>", round(dx_new_rate,2)))) +
   geom_point() +
-  geom_smooth(method = lm, color = "red") +
+  geom_smooth(aes(x = pct_vaccinated, y = dx_new_rate), method = lm, color = "red", inherit.aes = FALSE) +
   theme_minimal() +
   scale_y_continuous(labels= function(x) round(x*100, digits = 2)) + 
-  labs(x = "Mean COVID Vaccination Rate 
-  (fully vaccinated / population) ", y = "Mean Flu Rate 
-  (new diagnoses / 100 susceptible)", title = "Figure 1: COVID vaccination rate does not significantly reflect 
-flu vaccination rate", subtitle = "based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per 
+  labs(x = "Mean % Vaccinated for COVID 
+  (cum. fully vaccinated / population) ", y = "Mean Flu Rate 
+  (new diagnoses / 100 susceptible)", title = "Figure 1: COVID vaccination does not imply flu vaccination", subtitle = "based on quarterly cumulative COVID vaccination data compared to simulated flu incidence rate data per 
 quarter across 57 California counties, from Q4-2022 to Q2-2023") +
   facet_wrap(~quarter, scales = "free", labeller = labeller(quarter = qtr.labs)) + 
   theme(
@@ -75,41 +79,37 @@ quarter across 57 California counties, from Q4-2022 to Q2-2023") +
     axis.title.y = element_text(margin = margin(r = 5)),
     axis.title.x = element_text(margin = margin(t = 5)))
 
-ggplotly(vax_flu_byqtr) %>%
+ggplotly(vax_flu_byqtr, tooltip = "text") %>%
   layout(
-    title = list(text = paste0('Figure 1: COVID vaccination rate does not significantly reflect 
-flu vaccination rate.','<br>','<sup>','Across 57 California counties, from Q4-2022 to Q2-2023','</sup>'), yref = 'container', xref = 'paper', yref = 'paper'), 
-    annotations = list(text = paste0('<sup>','Based on quarterly COVID vaccination rate data compared to simulated flu incidence rate data per quarter','</sup>'), showarrow = F, xref = 'paper', yref = 'paper', xanchor = 'right', yanchor = 'auto', xshift = 350, yshift = -200),
+    title = list(text = paste0('Figure 1: COVID vaccination does not imply flu vaccination','<br>','<sup>','Across 57 California counties, from Q4-2022 to Q2-2023','</sup>'), yref = 'container', xref = 'paper', yref = 'paper'), 
+    annotations = list(text = paste0('<sup>','Based on quarterly cumulative COVID vaccination data compared to simulated flu incidence rate data per quarter','</sup>'), showarrow = F, xref = 'paper', yref = 'paper', xanchor = 'right', yanchor = 'auto', xshift = 350, yshift = -200),
     margin = list(t = 150, b = 110, l = 100, r = 30)
   )
 ```
 
-```{r Correlation table indicating relationship between COVID vaccination rates on severe flu rate - Kim, warning = FALSE, message = FALSE, echo = FALSE}
+```{r Correlation table indicating relationship between COVID vaccination and severe flu rate - Kim, warning = FALSE, message = FALSE, echo = FALSE}
 
-# summary(df_joined)
+# Redone - misread research question #2 in previous milestone
 
-# Create categories based on COVID vaccination rates and severe flu rates
-data <- df_joined %>%
-  mutate(
-    COVID_Vaccination_Rate = ifelse(mean_vaccination_rate <= median(mean_vaccination_rate), "Low Vaccination Rate (Min = 0.14)", "High Vaccination Rate (Max = 1.14)"),
-    Severe_Flu_Rate = ifelse(severe_new_rate <= median(severe_new_rate), "Low Severe Flu Rate (Min = 0.00)", "High Severe Flu Rate (Max = 0.43)")
-  )
-
-# Calculate the correlation for each combination
-correlation_table <- data %>%
-  group_by(COVID_Vaccination_Rate, Severe_Flu_Rate) %>%
+# Calculate the correlation for each county
+correlation_table <- df_joined %>%
+  group_by(county) %>%
   summarise(
-    Correlation = round(cor(mean_vaccination_rate, severe_new_rate), 2)
-  )
+    mean_pct_vaccinated_county = mean(pct_vaccinated),
+    mean_severe_new_rate = mean(severe_new_rate),
+    Correlation = round(cor(pct_vaccinated, severe_new_rate), 2)
+  ) %>% 
+  ungroup() %>%
+  distinct(county, .keep_all = TRUE)
 
 # Rename columns
-colnames(correlation_table) <- c("COVID Vaccination Rate", "Mean Severe Flu Rate", "Correlation")
+colnames(correlation_table) <- c("County", "Mean % Vaccinated for COVID", "Mean Severe Flu Rate", "Correlation")
 
 # Print the correlation table with kableExtra
   kable(
     correlation_table,
     format = "html", 
-    caption = "Table 1: No clear correlation between COVID vaccination rates and mean severe flu rate, Q4-2022 - Q2-2023") %>% 
+    caption = "Table 1: No clear correlation between COVID vaccination and mean severe flu rate within each county, Q4-2022 - Q2-2023") %>% 
   kable_styling(full_width = FALSE) 
 
 
@@ -127,44 +127,49 @@ age_group_vax_vs_flu_severity_table <- age_group_vax_vs_flu_severity
 # Create a summary table
 summary_table <- age_group_vax_vs_flu_severity_table %>%
   group_by(age_category) %>%
-  summarize(mean_vaccination_rate = mean(mean_vaccination_rate),
-            mean_flu_severity = mean(severe_new_rate))
+  summarize(mean_pct_vaccinated = mean(pct_vaccinated),
+            mean_flu_severity = mean(severe_new_rate),
+            correlation = round(cor(pct_vaccinated, severe_new_rate), 2)) %>%
+  ungroup()
 
 # Rename summary table data
-colnames(summary_table ) <- c("Age Category", "Mean COVID Vaccination Rate", "Mean Severe Flu Rate")
+colnames(summary_table ) <- c("Age Category", "Mean % Vaccinated for COVID", "Mean Severe Flu Rate", "Correlation")
 
 # Print the table using kableExtra (Quality table #1)
 kable(
   summary_table, 
   "html",
-  caption = "Table 2: High COVID vaccination rate not significantly associated with low severe flu rate") %>%
+  caption = "Table 2: High COVID vaccination % not significantly correlated with low severe flu rate within age categories, Q4-2022 - Q2-2023") %>%
   kable_styling(full_width = FALSE)
 
 
 # Quality plot
 
 # Scatter plot with facets for each age category
-vax_flu_byage <- ggplot(data = age_group_vax_vs_flu_severity, aes(x = mean_vaccination_rate, y = severe_new_rate, color = mean_vaccination_rate)) +
-  geom_point(size = 3) +
-  labs(title = "Figure 2: High COVID vaccination rate not significantly associated with
+vax_flu_byage <- ggplot(data = age_group_vax_vs_flu_severity, aes(x = pct_vaccinated, y = severe_new_rate, color = pct_vaccinated, text = paste("<b>County: </b>", county, "<br><b>Mean % Vaccinated for COVID: </b>", round(pct_vaccinated, 3)*100,"%", "<br><b>Flu Severity Rate: </b>", round(severe_new_rate,2)))) +
+  geom_point(size = 2) +
+  labs(title = "Figure 2: High COVID vaccination % not significantly associated with
 low severe flu rate",
-       subtitle = "Scatter Plots by Age Categories",
-       x = "Mean Vaccination Rate",
-       y = "Flu Severity Rate",
-       color = "Mean Vaccination Rate") +
-  geom_smooth(method = lm, color = "yellow") +
+       subtitle = "Scatter Plots by Age Categories, Q4-2022 - Q2-2023",
+       x = "Mean % Vaccinated for COVID
+(cum. fully vaccinated / population)",
+       y = "Flu Severity Rate
+(new severe cases / new diagnoses)",
+       color = "Mean % Vaccinated 
+for COVID") +
+  geom_smooth(aes(x = pct_vaccinated, y = severe_new_rate), method = lm, color = "yellow", inherit.aes = FALSE) +
   scale_color_gradient(low = "blue", high = "red") +  
   facet_wrap(~age_category, scales = "free") +  
   theme_minimal() + 
-  theme(panel.margin = unit(2, "lines"))
+  theme(panel.margin.y = unit(2, "lines"))
 
 # vax_flu_byage
 # interactive
-ggplotly(vax_flu_byage) %>%
+ggplotly(vax_flu_byage, tooltip = "text") %>%
   layout(
-    title = list(text = paste0('Figure 2: High COVID vaccination rate not significantly associated with
-low severe flu rate','<br>','<sup>','Scatter Plots by Age Categories','</sup>'), yref = 'container', xref = 'paper', yref = 'paper'),
-    margin = list(t = 130, b = 0, l = 100, r = 30)
+    title = list(text = paste0('Figure 2: High COVID vaccination % not significantly associated with
+low severe flu rate','<br>','<sup>','Scatter Plots by Age Categories, Q4-2022 - Q2-2023','</sup>'), yref = 'container', xref = 'paper', yref = 'paper'),
+    margin = list(t = 120, b = 60, l = 100, r = 30)
   )
 
 ```
